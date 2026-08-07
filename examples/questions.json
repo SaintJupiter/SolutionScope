@@ -1,0 +1,31 @@
+{
+  "questions": [
+    {
+      "question_id": "Q1",
+      "question": "Which capabilities are current, planned, candidate, or normative?",
+      "instruction_components": [
+        "current_capabilities",
+        "planned_capabilities",
+        "candidate_capabilities",
+        "normative_requirements"
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "question": "Which acceptance information is missing, and what should a reviewer confirm?",
+      "instruction_components": [
+        "acceptance_gaps",
+        "clarification_questions"
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "question": "Which statements require human confirmation before a PoC decision?",
+      "instruction_components": [
+        "conflicts",
+        "assumptions",
+        "human_confirmation"
+      ]
+    }
+  ]
+}

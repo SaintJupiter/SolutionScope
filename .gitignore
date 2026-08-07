@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+.env.*
+
+# Source and run artifacts stay local by default.
+runs/
+run/
+local_*/
+restricted_*/
+*.pdf
+*.docx
+*.jsonl
+*.log

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SolutionScope"
+  short_description: "从复杂技术材料提取能力台账并生成证据可追溯的审核结果"
+  default_prompt: "Use $solutionscope to extract traceable requirements and review a technical document without mixing current and planned capabilities."
