@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "config_id",
+    "allowed_states",
+    "state_rules",
+    "focus_terms",
+    "promotion_source_states",
+    "conflict_against_current_states",
+    "question_groups"
+  ],
+  "properties": {
+    "contract": {"const": "SolutionScope-v1.5-workflow-config"},
+    "config_id": {"type": "string", "minLength": 1},
+    "allowed_states": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["current", "planned", "candidate", "normative", "unknown", "conflicted"]
+      }
+    },
+    "state_rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["state", "phrases"],
+        "properties": {
+          "state": {"enum": ["current", "planned", "candidate", "normative"]},
+          "phrases": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "focus_terms": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "promotion_source_states": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["planned", "candidate", "normative"]}
+    },
+    "conflict_against_current_states": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["planned", "candidate"]}
+    },
+    "question_groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["group_id", "questions"],
+        "properties": {
+          "group_id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9_-]+$"},
+          "questions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["question_id", "question", "instruction_components"],
+              "properties": {
+                "question_id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9_-]+$"},
+                "question": {"type": "string", "minLength": 1},
+                "instruction_components": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {"type": "string", "minLength": 1}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

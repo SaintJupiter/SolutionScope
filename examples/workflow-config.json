@@ -1,0 +1,41 @@
+{
+  "contract": "SolutionScope-v1.5-workflow-config",
+  "config_id": "public-synthetic-platform-review-v1",
+  "allowed_states": ["current", "planned", "candidate", "normative", "unknown", "conflicted"],
+  "state_rules": [
+    {"state": "current", "phrases": ["currently supports"]},
+    {"state": "planned", "phrases": ["next version will"]},
+    {"state": "candidate", "phrases": ["could add"]},
+    {"state": "normative", "phrases": ["must retain"]}
+  ],
+  "focus_terms": ["review workflow"],
+  "promotion_source_states": ["planned", "candidate", "normative"],
+  "conflict_against_current_states": ["planned", "candidate"],
+  "question_groups": [
+    {
+      "group_id": "G1",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question": "区分材料中的当前能力、后续规划、候选构想和规范性要求。",
+          "instruction_components": ["current_capabilities", "planned_capabilities", "candidate_capabilities", "normative_requirements"]
+        },
+        {
+          "question_id": "Q2",
+          "question": "识别验收信息缺口，并列出需要人工确认的问题。",
+          "instruction_components": ["acceptance_gaps", "clarification_questions"]
+        }
+      ]
+    },
+    {
+      "group_id": "G2",
+      "questions": [
+        {
+          "question_id": "Q3",
+          "question": "判断哪些陈述需要在 PoC 决策前由人工确认。",
+          "instruction_components": ["conflicts", "assumptions", "human_confirmation"]
+        }
+      ]
+    }
+  ]
+}

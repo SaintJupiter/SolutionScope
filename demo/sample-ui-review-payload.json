@@ -1,0 +1,121 @@
+{
+  "contract": "SolutionScope-ui-review-payload-v1",
+  "fixtureId": "SS-TEST-RUN",
+  "fixtureType": "public_authorized_ai_draft",
+  "title": "技术材料要求抽取与审核",
+  "subtitle": "TEST-RUN · 本地导入 · 页面不调用模型",
+  "boundary": [
+    "该文件是确定性生成的审核视图，不改写模型原始输出。",
+    "页面只在当前浏览器会话中读取审核包，不上传材料。",
+    "结构和来源门禁通过不代表语义正确、专家批准或生产可用。"
+  ],
+  "fieldLabels": {
+    "requirement_object": "审核问题",
+    "preconditions": "涉及的材料状态",
+    "required_action": "关键发现",
+    "expected_result": "回答摘要",
+    "quantitative_target": "量化信息",
+    "test_or_acceptance_method": "验收信息",
+    "scope_boundary": "适用范围",
+    "audit_requirement": "审计要求"
+  },
+  "items": [
+    {
+      "id": "QA",
+      "topic": "区分现状和规划。",
+      "risk": "high",
+      "evidence": {
+        "status": "bound",
+        "sourceId": "DOC-a9c86f5e98b7",
+        "locator": "p.1 / 范围 / P001-001",
+        "origin": "已授权公开材料的精确来源锚点",
+        "excerpt": "当前平台支持数据采集，并通过统一时间轴完成多源对齐。",
+        "relatedLocators": [
+          {
+            "page_number": 1,
+            "section": "范围",
+            "paragraph_id": "P001-001",
+            "quote": "当前平台支持数据采集，并通过统一时间轴完成多源对齐。",
+            "display": "p.1 / 范围 / P001-001"
+          },
+          {
+            "page_number": 1,
+            "section": "范围",
+            "paragraph_id": "P001-001",
+            "quote": "通过统一时间轴完成多源对齐",
+            "display": "p.1 / 范围 / P001-001"
+          },
+          {
+            "page_number": 1,
+            "section": "范围",
+            "paragraph_id": "P001-002",
+            "quote": "后续将完善统一时间轴的精度校准。",
+            "display": "p.1 / 范围 / P001-002"
+          }
+        ]
+      },
+      "aiDraft": {
+        "requirement_object": "区分现状和规划。",
+        "preconditions": "current、conflicted",
+        "required_action": "平台当前支持采集。",
+        "expected_result": "当前能力与规划存在时间轴范围张力。",
+        "quantitative_target": null,
+        "test_or_acceptance_method": null,
+        "clarification_questions": [
+          "请确认：统一时间轴的当前范围仍需确认。"
+        ]
+      },
+      "aiCompleteness": "partial",
+      "reviewHints": [
+        "统一时间轴的当前范围仍需确认。"
+      ],
+      "suggestedMissingFields": []
+    },
+    {
+      "id": "QB",
+      "topic": "列出候选能力和待确认项。",
+      "risk": "high",
+      "evidence": {
+        "status": "bound",
+        "sourceId": "DOC-a9c86f5e98b7",
+        "locator": "p.1 / 范围 / P001-003",
+        "origin": "已授权公开材料的精确来源锚点",
+        "excerpt": "可建设自动标定能力。",
+        "relatedLocators": [
+          {
+            "page_number": 1,
+            "section": "范围",
+            "paragraph_id": "P001-003",
+            "quote": "可建设自动标定能力。",
+            "display": "p.1 / 范围 / P001-003"
+          }
+        ]
+      },
+      "aiDraft": {
+        "requirement_object": "列出候选能力和待确认项。",
+        "preconditions": "candidate",
+        "required_action": "材料提出自动标定候选。",
+        "expected_result": "自动标定仍是候选能力。",
+        "quantitative_target": null,
+        "test_or_acceptance_method": null,
+        "clarification_questions": [
+          "如何验收自动标定？"
+        ]
+      },
+      "aiCompleteness": "partial",
+      "reviewHints": [
+        "尚无验收方法。"
+      ],
+      "suggestedMissingFields": [
+        "test_or_acceptance_method"
+      ]
+    }
+  ],
+  "source": {
+    "sourceSha256": "a9c86f5e98b7008a4e4aa5f25dd124191ad5a5bb77bf8f0958a77c3c8a659852",
+    "configSha256": "3ed2c488c67048dcd9bf6954dbfb708ac532a16918bddc04a7145001b97781c9",
+    "reviewDraftSha256": "176b260c6683d1bd05455423f21b580a0e6b3eddf225f188ae5555024a9b3712",
+    "generatedAtUtc": "2026-08-09T14:26:54Z"
+  },
+  "claimBoundary": "Local review view model only; no accuracy, expert correctness, production readiness, user value, or ROI claim."
+}

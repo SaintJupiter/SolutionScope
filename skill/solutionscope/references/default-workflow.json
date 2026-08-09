@@ -1,0 +1,121 @@
+{
+  "contract": "SolutionScope-v1.5-workflow-config",
+  "config_id": "solutionscope-default-technical-review-v1",
+  "allowed_states": [
+    "current",
+    "planned",
+    "candidate",
+    "normative",
+    "unknown",
+    "conflicted"
+  ],
+  "state_rules": [
+    {
+      "state": "planned",
+      "phrases": [
+        "后续科研功能将重点完善",
+        "后续将",
+        "还将",
+        "将增强",
+        "未来可进一步",
+        "未来将",
+        "引入主动学习",
+        "引入半自动标注"
+      ]
+    },
+    {
+      "state": "candidate",
+      "phrases": ["可建设", "可结合", "可建立"]
+    },
+    {
+      "state": "normative",
+      "phrases": ["应记录", "应当", "必须", "需满足"]
+    },
+    {
+      "state": "current",
+      "phrases": [
+        "当前平台支持",
+        "平台支持",
+        "平台已具备",
+        "系统可接入",
+        "通过统一时间轴完成",
+        "可完成图像与视频帧标注"
+      ]
+    }
+  ],
+  "focus_terms": ["统一时间轴", "主动学习", "自动化标定", "风险量化"],
+  "promotion_source_states": ["planned", "candidate", "normative"],
+  "conflict_against_current_states": ["planned", "candidate"],
+  "question_groups": [
+    {
+      "group_id": "G1",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question": "区分平台当前能力、后续规划、候选构想和规范性要求。",
+          "instruction_components": [
+            "current_capabilities",
+            "planned_capabilities",
+            "candidate_capabilities",
+            "normative_requirements"
+          ]
+        },
+        {
+          "question_id": "Q2",
+          "question": "梳理采集、治理、标注、训练、评估和复现链路及模块依赖。",
+          "instruction_components": [
+            "chain_steps",
+            "module_dependencies",
+            "reproducibility_basis",
+            "missing_links"
+          ]
+        },
+        {
+          "question_id": "Q3",
+          "question": "找出阻碍测试验收与科研复现的关键缺口，并按影响排序。",
+          "instruction_components": [
+            "ranked_gaps",
+            "acceptance_blockers",
+            "reproducibility_blockers",
+            "clarification_questions"
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "G2",
+      "questions": [
+        {
+          "question_id": "Q4",
+          "question": "识别重复描述、状态漂移和潜在冲突，尤其关注多模态时间轴对齐。",
+          "instruction_components": [
+            "duplicates",
+            "state_drift",
+            "potential_conflicts",
+            "human_confirmation"
+          ]
+        },
+        {
+          "question_id": "Q5",
+          "question": "若首轮 PoC 只能选择三项能力，给出选择、依赖和取舍，区分材料事实与业务假设。",
+          "instruction_components": [
+            "three_choices",
+            "dependencies",
+            "tradeoffs",
+            "fact_vs_business_assumption"
+          ]
+        },
+        {
+          "question_id": "Q6",
+          "question": "为多模态对齐、自动标定、主动学习和风险量化分别列出可执行验收仍需确认的信息，不得编造阈值。",
+          "instruction_components": [
+            "multimodal_alignment",
+            "automated_calibration",
+            "active_learning",
+            "risk_quantification"
+          ]
+        }
+      ]
+    }
+  ]
+}

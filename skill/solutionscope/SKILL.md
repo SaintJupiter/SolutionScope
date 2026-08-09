@@ -1,28 +1,65 @@
 ---
 name: solutionscope
-description: Extract capabilities, requirements, evidence, lifecycle states, gaps, and conflicts from permitted technical materials, then produce review-ready answers with deterministic source binding. Use for technical proposals, product specifications, acceptance documents, PoC planning, or other long-form materials where current, planned, candidate, normative, unknown, and conflicted statements must remain traceable across answers.
+description: Prepare, validate, assemble, and report a traceable offline review workflow for permitted technical Markdown. Use when requirements, capabilities, gaps, conflicts, lifecycle states, PoC choices, or acceptance questions must stay bound to exact source anchors and when model outputs must be imported without calling an external model.
 ---
 
-# SolutionScope
+# SolutionScope v1.5 (current)
 
-Use `scripts/ledger_constrained_workflow.py`. Read
-`references/semantic-contract.md` before changing the output contract.
+Use `scripts/solutionscope_workflow.py`. Read
+`references/contract-and-boundaries.md` before changing schemas, lifecycle rules,
+or claim boundaries.
 
-1. Confirm that the input document is permitted for local and model processing.
-2. Initialize a new run with a Markdown document. Supply a custom questions JSON
-   when the default review questions do not match the task.
-3. Prepare the capability-ledger request. Send only that request to the selected
-   model and save the raw JSON result at the declared output path.
-4. Register and validate the ledger. Do not continue when the structural gate
-   fails; keep lifecycle conflicts for human confirmation.
-5. Prepare small question groups. The model may select only known
-   `capability_id` values and must not generate source locators or lifecycle
-   states.
-6. Register and validate every group, then assemble the final review draft.
-   The assembler injects exact evidence and lifecycle state from the ledger.
-7. Run the final gate and export the review payload. Treat a structural pass as
-   review readiness only, never as semantic correctness or expert approval.
+1. Choose a reviewed workflow configuration. Start with
+   `references/default-workflow.json`; copy and edit it for a new task rather
+   than changing Python. Keep questions, groups, lifecycle phrases, and focus
+   terms in configuration.
+2. Run `prepare` to import permitted Markdown and create a ledger request,
+   output schemas, fixed questions, and an auditable run record. This command
+   never calls a model.
+3. Generate the ledger in an isolated model context using only the request
+   package. Run `advance` to register the immutable raw ledger, validate JSON
+   Schema and exact anchors, and create grouped fragment requests.
+4. Generate each fragment using only its request package. Run `complete` to
+   register raw fragments, validate capability IDs and instruction coverage,
+   inject ledger states and anchors deterministically, and write JSON and
+   Markdown reports. A successful final structural gate also writes
+   `final/ui_review_payload.json`, a deterministic browser view model for the
+   local review workbench. It does not alter or replace `review_draft.json`.
+5. When compatible raw outputs already exist, use `run-offline` to execute the
+   same prepare, register, validate, assemble, and report path in one command.
+6. Treat structural passes and deterministic source-risk flags as review
+   controls, not accuracy, expert correctness, generalization, or business
+   impact. Retain conflicts and unresolved questions for a person. Read the
+   final `review_gate`: `blocked_pending_human_review` means the artifact may be
+   inspected but must not be treated as released or approved. A zero process
+   exit code means artifact generation succeeded, not that the human gate passed.
+7. To review interactively, serve `prototype/review-decision-v2/` over local
+   HTTP and import `final/ui_review_payload.json`. The page stores the imported
+   payload only in the current browser session, does not call a model, and does
+   not upload the file. Do not publish a payload containing restricted source
+   excerpts.
 
-Keep source documents and run artifacts out of public repositories by default.
-Never use a reference answer, prior review, or historic model output during
-generation unless the user explicitly requests an evaluation workflow.
+## Commands
+
+```bash
+python3 scripts/solutionscope_workflow.py prepare \
+  --input <permitted.md> --config references/default-workflow.json \
+  --run-dir <new-run-dir> --run-id <id>
+
+python3 scripts/solutionscope_workflow.py advance \
+  --run-dir <run-dir> --ledger-output <ledger.json>
+
+python3 scripts/solutionscope_workflow.py complete \
+  --run-dir <run-dir> \
+  --fragment-output G1=<g1.json> --fragment-output G2=<g2.json>
+
+python3 scripts/solutionscope_workflow.py run-offline \
+  --input <permitted.md> --config <config.json> \
+  --run-dir <new-run-dir> --run-id <id> \
+  --ledger-output <ledger.json> \
+  --fragment-output G1=<g1.json> --fragment-output G2=<g2.json>
+```
+
+Pass `--call-metadata <json>` when provider duration, token, or cost data is
+available. Missing values remain the literal string `unavailable`; never infer
+them. Do not edit raw model artifacts after registration.
