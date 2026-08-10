@@ -8,8 +8,6 @@
 
 > 在线页面仅演示交互。导入的 JSON 只保存在当前浏览器会话，不上传材料，也不调用模型。
 
-![SolutionScope 产品场景与审核体验](docs/assets/solutionscope-product-overview-v4.png)
-
 ## 使用场景
 
 方案人员、项目负责人和测试评审人员经常需要在长篇材料中确认：一项能力究竟是**已经支持、计划建设，还是尚未定义验收口径**。同一结论的条件和证据可能分散在不同章节，人工逐页核对耗时，普通摘要又容易省略来源、混淆状态。
@@ -49,7 +47,19 @@ flowchart LR
 - 确定性组装 JSON/Markdown 审核草稿，并导出 `ui_review_payload.json`；
 - 在静态审核页面中导入审核包，逐项接受、修改或标记无法判断，并形成阶段决策卡。
 
-![审核工作台与评测结果](docs/assets/review-workbench-v3.png)
+## 产品界面
+
+### 1. 产品首页
+
+![SolutionScope 产品首页](docs/assets/01-home-v5.png)
+
+### 2. 材料与证据审核
+
+![SolutionScope 材料与证据审核](docs/assets/02-evidence-review-v5.png)
+
+### 3. 人工审核工作台
+
+![SolutionScope 人工审核工作台](docs/assets/03-review-workbench-v5.png)
 
 ## 快速开始
 
