@@ -290,7 +290,7 @@ function workflowStory() {
     <section class="story-section" id="workflow">
       <div class="story-grid">
         <article class="story-main reveal"><span class="eyebrow">WORKFLOW, NOT MAGIC</span><h2>AI 做初筛，<br/>人来做决定。</h2><p>系统不试图替代领域判断，而是把材料拆成可以被检查的要求、证据与问题。</p><button class="button button-coral js-open-pane" data-scroll-target="workflow-run">查看运行过程 ${icon("arrow")}</button></article>
-        <article class="story-stat reveal"><span>证据定位错误密度</span><strong>−34.6%</strong><small>早期开发样本中的临时观察口径</small><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></article>
+        <article class="story-stat reveal"><span>关键标识召回</span><strong>+33.3 pp</strong><small>规则对齐 A/B · 74/111 → 111/111 · DEV n=6</small><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></article>
         <article class="story-risk reveal"><div class="icon-tile">${icon("shield")}</div><span>风险不是隐藏</span><h3>原文没说的，<br/>系统不会替它说。</h3><div><b>缺口</b><b>冲突</b><b>待确认</b></div></article>
         <article class="story-source reveal"><span>ORIGINAL SOURCE</span><blockquote>“采集数据保留来源、时间、设备、文件校验值……”</blockquote><p><i></i> 已绑定证据 E-12</p></article>
       </div>
@@ -300,17 +300,29 @@ function workflowStory() {
 function evaluationStory() {
   return `
     <section class="evaluation-section" id="evaluation">
-      <div class="evaluation-copy reveal"><span class="eyebrow">MODEL EVALUATION</span><h2>结果好不好，<br/>要能说清楚哪里更好。</h2><p>六边形比较的是控制机制是否覆盖，不是模型准确率。真实开发样本中的“未来规划被写成当前能力”风险由 8 项降至 0 项，仍不代表泛化效果。</p><button class="button button-dark js-open-pane" data-scroll-target="evaluation-report">打开评测报告 ${icon("chart")}</button></div>
+      <div class="evaluation-copy reveal"><span class="eyebrow">MODEL EVALUATION</span><h2>同一轻量模型，<br/>少漏掉关键要求。</h2><p>两份 492 页与 733 页的公开标准按问题检索相关片段；在相同 <b>gpt-5.4-mini / low</b>、相同 6 个案例和证据候选下，受控工作流主要改善要求召回，同时保持证据绑定与验收边界判断不退化。</p><button class="button button-dark js-open-pane" data-scroll-target="evaluation-report">打开评测报告 ${icon("chart")}</button></div>
       <div class="evaluation-visual reveal">
-        <div class="eval-header"><span>MECHANISM COVERAGE</span><b>V1.4 / DEV</b></div>
-        <div class="radar">
-          <div class="radar-ring ring-one"></div><div class="radar-ring ring-two"></div><div class="radar-ring ring-three"></div>
-          <div class="radar-shape radar-direct"></div>
-          <div class="radar-shape radar-controlled"></div>
-          <span class="radar-label label-a">证据绑定</span><span class="radar-label label-b">状态区分</span><span class="radar-label label-c">缺口保留</span><span class="radar-label label-d">结构校验</span><span class="radar-label label-e">冲突检查</span><span class="radar-label label-f">人工门禁</span>
+        <div class="eval-header"><span>FROZEN DEVELOPMENT PILOT</span><b>gpt-5.4-mini / low · n=6</b></div>
+        <div class="metric-compare-list">
+          <article class="metric-compare">
+            <div class="metric-title"><strong>关键标识召回</strong><b>+33.3 pp</b></div>
+            <div class="pair-row"><span>直接回答</span><div class="compare-track"><i class="direct-fill" style="--value:66.7%"></i></div><em>74/111</em></div>
+            <div class="pair-row"><span>SolutionScope</span><div class="compare-track"><i class="skill-fill" style="--value:100%"></i></div><em>111/111</em></div>
+          </article>
+          <article class="metric-compare">
+            <div class="metric-title"><strong>评估目标召回</strong><b>+47.1 pp</b></div>
+            <div class="pair-row"><span>直接回答</span><div class="compare-track"><i class="direct-fill" style="--value:52.9%"></i></div><em>37/70</em></div>
+            <div class="pair-row"><span>SolutionScope</span><div class="compare-track"><i class="skill-fill" style="--value:100%"></i></div><em>70/70</em></div>
+          </article>
+          <article class="metric-compare">
+            <div class="metric-title"><strong>评估方法召回</strong><b>+11.8 pp</b></div>
+            <div class="pair-row"><span>直接回答</span><div class="compare-track"><i class="direct-fill" style="--value:88.2%"></i></div><em>15/17</em></div>
+            <div class="pair-row"><span>SolutionScope</span><div class="compare-track"><i class="skill-fill" style="--value:100%"></i></div><em>17/17</em></div>
+          </article>
         </div>
-        <div class="eval-legend"><span><i class="violet-dot"></i>受控工作流</span><span><i class="coral-dot"></i>直接提示</span></div>
-        <p class="radar-caption">仅表示机制覆盖程度 · 不等同于准确率或模型能力评分</p>
+        <div class="guardrail-grid"><span><b>12/12 → 12/12</b>相关证据绑定</span><span><b>6/6 → 6/6</b>验收边界判断</span></div>
+        <div class="eval-foot"><span><i class="coral-dot"></i>直接回答</span><span><i class="violet-dot"></i>受控工作流</span><b>Token 约 1.95×</b></div>
+        <p class="eval-note">开发集诊断，不代表泛化；模型仅接收按题检索的证据片段，并非整本 1,225 页原文。</p>
       </div>
     </section>`;
 }
