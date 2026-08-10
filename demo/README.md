@@ -1,6 +1,6 @@
-# SolutionScope Review → Decision v2
+# SolutionScope 产品演示与审核工作台
 
-> **静态两页审核原型。** 页面不调用模型；既可使用公开合成 fixture，也可本地导入 Skill 生成的审核包。
+> **静态产品演示。** 页面先说明适用场景，再展示语义标注、审核工作台、工作流与评测结果；不调用模型，既可使用公开合成 fixture，也可本地导入 Skill 生成的审核包。
 
 ## 要回答的问题
 
@@ -28,7 +28,7 @@
 可以直接双击 `index.html` 打开。推荐从项目根目录运行：
 
 ```bash
-python3 -m http.server 8000 --directory SolutionScope/prototype/review-decision-v2
+python3 -m http.server 8000 --directory demo
 ```
 
 然后访问：
@@ -51,7 +51,7 @@ solutionscope.reviewDecisionV2.v1:<fixtureId>
 无需安装依赖：
 
 ```bash
-node SolutionScope/prototype/review-decision-v2/smoke_test.js
+node demo/smoke_test.js
 ```
 
 自测检查：

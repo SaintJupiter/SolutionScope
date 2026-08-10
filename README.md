@@ -1,12 +1,26 @@
 # SolutionScope
 
-面向复杂技术材料的证据约束审查工作流。它先区分材料中的**现有能力、后续规划、候选构想与规范性要求**，再让模型围绕稳定的能力 ID 回答问题，最后把状态、原文锚点和待确认项确定性地组装为人工审核草稿。
+面向技术方案评审与验收准备的证据约束审核工作台。它把散落在可研报告、技术方案和测试材料中的要求，整理成**结构化要求、原文证据、信息缺口与状态冲突**，让审核者可以逐项追溯和确认。
 
-[在线体验审核工作台](https://saintjupiter.github.io/SolutionScope/) · [下载合成示例审核包](demo/sample-ui-review-payload.json)
+## [打开在线产品演示 →](https://saintjupiter.github.io/SolutionScope/)
+
+[直接查看审核工作台](https://saintjupiter.github.io/SolutionScope/#product) · [下载合成示例审核包](demo/sample-ui-review-payload.json)
 
 > 在线页面仅演示交互。导入的 JSON 只保存在当前浏览器会话，不上传材料，也不调用模型。
 
-![要求审核工作台](docs/assets/review-workbench-v3.png)
+![SolutionScope 产品场景与审核体验](docs/assets/solutionscope-product-overview-v4.png)
+
+## 使用场景
+
+方案人员、项目负责人和测试评审人员经常需要在长篇材料中确认：一项能力究竟是**已经支持、计划建设，还是尚未定义验收口径**。同一结论的条件和证据可能分散在不同章节，人工逐页核对耗时，普通摘要又容易省略来源、混淆状态。
+
+SolutionScope 将这项工作拆成一条可检查的路径：
+
+1. 导入已经获准处理的技术材料；
+2. 识别要求、能力状态、量化指标和验收方法；
+3. 为事实字段绑定页码、章节、段落与原文引用；
+4. 将缺口、冲突和无法判断项交给人工确认；
+5. 保留审核决定与阶段性评测结果。
 
 ## 它解决什么问题
 
@@ -35,7 +49,7 @@ flowchart LR
 - 确定性组装 JSON/Markdown 审核草稿，并导出 `ui_review_payload.json`；
 - 在静态审核页面中导入审核包，逐项接受、修改或标记无法判断，并形成阶段决策卡。
 
-![阶段决策页](docs/assets/decision-gates-v3.png)
+![审核工作台与评测结果](docs/assets/review-workbench-v3.png)
 
 ## 快速开始
 

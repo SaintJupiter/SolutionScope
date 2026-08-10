@@ -4,15 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <title>SolutionScope — 语义审核</title>
+    <meta name="description" content="SolutionScope：面向技术方案评审与验收准备的证据约束审核工作台" />
+    <title>SolutionScope — 技术材料审核工作台</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=application-scenarios-20260810" />
   </head>
-  <body data-page="review">
-    <main id="app"></main>
+  <body>
+    <!-- 本地审核原型：默认使用脱敏合成数据，可导入 Skill 生成的审核包。 -->
+    <div id="app"></div>
+    <div id="prototype-toast" class="prototype-toast" role="status" aria-live="polite"></div>
     <script src="fixture.js"></script>
     <script src="payload.js"></script>
     <script src="state.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=application-scenarios-20260810"></script>
+    <script src="runtime.js?v=manual-review-20260810"></script>
   </body>
 </html>
