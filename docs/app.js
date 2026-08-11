@@ -321,7 +321,7 @@ function evaluationStory() {
           </article>
         </div>
         <div class="guardrail-grid"><span><b>12/12 → 12/12</b>相关证据绑定</span><span><b>6/6 → 6/6</b>验收边界判断</span></div>
-        <div class="eval-foot"><span><i class="coral-dot"></i>直接回答</span><span><i class="violet-dot"></i>受控工作流</span><b>Token 约 1.95×</b></div>
+        <div class="eval-foot"><span><i class="coral-dot"></i>直接回答</span><span><i class="violet-dot"></i>受控工作流</span></div>
         <p class="eval-note">开发集诊断，不代表泛化；模型仅接收按题检索的证据片段，并非整本 1,225 页原文。</p>
       </div>
     </section>`;
