@@ -35,4 +35,4 @@
 - 本结果仅为 `DEV / n=6` 的机制验证，不代表保留集表现、专家一致性、泛化能力或业务 ROI。
 - 证据绑定和验收边界在 A 组已经满分，不能声称 SolutionScope 在这些指标上继续提升。
 
-![SolutionScope 提升机制与开发集结果](assets/04-why-it-improves.svg)
+![SolutionScope 开发集评测结果](assets/04-evaluation-results.png)

@@ -30,7 +30,7 @@ function nav() {
         <span class="logo-mark">S</span><span>Solution<em>Scope</em></span>
       </a>
       <nav class="nav-links" aria-label="主导航">
-        <a href="#product">产品体验</a><a href="#workflow">工作流</a><a href="#evaluation">评测结果</a>
+        <a href="#evaluation">评测结果</a><a href="#product">产品体验</a><a href="#workflow">工作流</a>
       </nav>
       <div class="nav-actions">
         <span class="prototype-badge">VISUAL PROTOTYPE</span>
@@ -337,7 +337,7 @@ function footer() {
 }
 
 function render() {
-  document.getElementById("app").innerHTML = `${nav()}${hero()}${productDemo()}${workflowStory()}${evaluationStory()}${footer()}`;
+  document.getElementById("app").innerHTML = `${nav()}${hero()}${evaluationStory()}${productDemo()}${workflowStory()}${footer()}`;
   bindInteractions();
   observeReveals();
 }
