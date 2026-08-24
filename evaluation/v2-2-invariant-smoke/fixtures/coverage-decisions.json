@@ -1,0 +1,37 @@
+{
+  "contract": "SolutionScope-v2.2-coverage-decisions",
+  "decisions": [
+    {
+      "requirement_id": "R-001",
+      "solution_components": [
+        {"component_id": "R-001::ACTION", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P010-001"], "rationale": "The current module detects vessels."},
+        {"component_id": "R-001::COND-01", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P010-001"], "rationale": "The solution states 4 km."},
+        {"component_id": "R-001::COND-02", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P010-001"], "rationale": "The solution states the declared operating conditions."},
+        {"component_id": "R-001::CRIT-01", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P010-001"], "rationale": "The solution states a 90 percent commitment.", "observed_criterion": {"metric": "recognition rate", "operator": ">=", "threshold": "90", "unit": "%"}}
+      ],
+      "verification_components": [
+        {"component_id": "R-001::VER-METHOD", "status": "supported", "evidence_ids": ["VER-P020-001"], "rationale": "A labelled encounter test is specified."},
+        {"component_id": "R-001::VER-CRIT-01", "status": "supported", "evidence_ids": ["VER-P020-001"], "rationale": "The test uses the required threshold.", "observed_criterion": {"metric": "recognition rate", "operator": ">=", "threshold": "92", "unit": "%"}},
+        {"component_id": "R-001::VER-COND-01", "status": "supported", "evidence_ids": ["VER-P020-001"], "rationale": "The test states 4 km."},
+        {"component_id": "R-001::VER-COND-02", "status": "supported", "evidence_ids": ["VER-P020-001"], "rationale": "The test states the declared operating conditions."}
+      ],
+      "unresolved_gaps": [],
+      "conflicts": []
+    },
+    {
+      "requirement_id": "R-002",
+      "solution_components": [
+        {"component_id": "R-002::ACTION", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P011-001"], "rationale": "The current pipeline limits latency."},
+        {"component_id": "R-002::COND-01", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P011-001"], "rationale": "The required timestamp interval is stated."},
+        {"component_id": "R-002::CRIT-01", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P011-001"], "rationale": "The solution states an equivalent 0.6 second limit.", "observed_criterion": {"metric": "end-to-end latency", "operator": "<=", "threshold": "0.6", "unit": "s"}}
+      ],
+      "verification_components": [
+        {"component_id": "R-002::VER-METHOD", "status": "supported", "evidence_ids": ["VER-P021-001"], "rationale": "A timestamp difference test is specified."},
+        {"component_id": "R-002::VER-CRIT-01", "status": "supported", "evidence_ids": ["VER-P021-001"], "rationale": "The test states an equivalent 0.6 second limit.", "observed_criterion": {"metric": "end-to-end latency", "operator": "<=", "threshold": "0.6", "unit": "s"}},
+        {"component_id": "R-002::VER-COND-01", "status": "supported", "evidence_ids": ["VER-P021-001"], "rationale": "The test uses the required timestamp interval."}
+      ],
+      "unresolved_gaps": [],
+      "conflicts": []
+    }
+  ]
+}

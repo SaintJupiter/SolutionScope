@@ -1,0 +1,37 @@
+{
+  "contract": "SolutionScope-v2.1-coverage-decisions",
+  "decisions": [
+    {
+      "requirement_id": "R-001",
+      "solution_components": [
+        {"component_id": "R-001::ACTION", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P010-001"], "rationale": "The solution states vessel detection."},
+        {"component_id": "R-001::COND-01", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P010-001"], "rationale": "The solution states 4 km."},
+        {"component_id": "R-001::COND-02", "status": "absent", "claim_lifecycle_state": "unknown", "evidence_ids": [], "rationale": "The operating conditions are not defined."},
+        {"component_id": "R-001::CRIT-01", "status": "absent", "claim_lifecycle_state": "unknown", "evidence_ids": [], "rationale": "The solution does not claim the 92 percent threshold."}
+      ],
+      "verification_components": [
+        {"component_id": "R-001::VER-METHOD", "status": "supported", "evidence_ids": ["VER-P020-001"], "rationale": "A labelled encounter test is defined."},
+        {"component_id": "R-001::VER-CRITERION", "status": "supported", "evidence_ids": ["VER-P020-001"], "rationale": "A 92 percent pass threshold is defined."},
+        {"component_id": "R-001::VER-COND-01", "status": "missing", "evidence_ids": [], "rationale": "The test does not bind the encounters to 4 km."},
+        {"component_id": "R-001::VER-COND-02", "status": "missing", "evidence_ids": [], "rationale": "The declared operating conditions remain undefined."}
+      ],
+      "unresolved_gaps": ["Define the operating conditions and bind the recognition test to the 4 km condition.", "Add the 92 percent performance commitment to the solution response."],
+      "conflicts": []
+    },
+    {
+      "requirement_id": "R-002",
+      "solution_components": [
+        {"component_id": "R-002::ACTION", "status": "partial", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P011-001"], "rationale": "Timestamps are recorded, but the solution does not commit to limiting latency."},
+        {"component_id": "R-002::COND-01", "status": "covered", "claim_lifecycle_state": "current", "evidence_ids": ["SOL-P011-001"], "rationale": "Sensor and risk-output timestamps are both recorded."},
+        {"component_id": "R-002::CRIT-01", "status": "absent", "claim_lifecycle_state": "unknown", "evidence_ids": [], "rationale": "The solution does not claim a 600 ms bound."}
+      ],
+      "verification_components": [
+        {"component_id": "R-002::VER-METHOD", "status": "supported", "evidence_ids": ["VER-P021-001"], "rationale": "The plan calculates timestamp differences."},
+        {"component_id": "R-002::VER-CRITERION", "status": "supported", "evidence_ids": ["VER-P021-001"], "rationale": "A 95th-percentile 600 ms pass criterion is defined."},
+        {"component_id": "R-002::VER-COND-01", "status": "supported", "evidence_ids": ["VER-P021-001"], "rationale": "The method uses the required timestamp interval."}
+      ],
+      "unresolved_gaps": ["Add an explicit 600 ms latency commitment to the solution response."],
+      "conflicts": []
+    }
+  ]
+}

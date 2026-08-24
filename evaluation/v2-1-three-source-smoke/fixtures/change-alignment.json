@@ -1,0 +1,19 @@
+{
+  "contract": "SolutionScope-v2.1-requirement-change-alignment",
+  "changes": [
+    {
+      "change_id": "C-001",
+      "change_type": "modified",
+      "old_requirement_ids": ["R-001"],
+      "new_requirement_ids": ["R-001"],
+      "rationale": "The recognition-rate threshold changed from 92% to 95%."
+    },
+    {
+      "change_id": "C-002",
+      "change_type": "unchanged",
+      "old_requirement_ids": ["R-002"],
+      "new_requirement_ids": ["R-002"],
+      "rationale": "The end-to-end latency requirement is unchanged."
+    }
+  ]
+}

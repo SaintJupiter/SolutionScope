@@ -1,0 +1,4 @@
+interface:
+  display_name: "SolutionScope v2.2"
+  short_description: "核对要求、量化口径、方案与验收闭环"
+  default_prompt: "Use $solutionscope-v2-2 to compare the supplied requirements, solution response, and verification plan, normalize and compare quantitative commitments, produce an auditable coverage matrix, and hold release when requirement changes require re-review."

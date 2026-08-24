@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.playwright-cli/
 .venv/
 .env
 .env.*
@@ -9,6 +10,8 @@ __pycache__/
 # Source and run artifacts stay local by default.
 runs/
 run/
+change-impact-run/
+direct-rag-baseline/
 local_*/
 restricted_*/
 *.pdf

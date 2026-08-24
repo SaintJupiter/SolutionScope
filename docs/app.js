@@ -6,6 +6,86 @@ const chapters = [
   { id: "05", title: "安全边界", count: 4, state: "idle" },
 ];
 
+let importedCoveragePayload = null;
+let importedChangeImpact = null;
+
+const coverageDemoRows = [
+  { requirement_id: "R-014", requirement: "目标识别率满足规定阈值", solution_coverage: "full", verification_readiness: "executable", release_decision: "block_invariant_failure", reason_codes: ["solution_threshold_not_satisfied"], failed_invariants: [{ code: "solution_threshold_not_satisfied", message: "方案给出的指标低于需求门槛，相关段落虽已检索到，仍不能放行。" }], required_actions: ["recheck_solution_commitment"], solution_evidence_count: 3, verification_evidence_count: 2 },
+  { requirement_id: "R-021", requirement: "感知时延 ≤ 600 ms", solution_coverage: "covered", verification_readiness: "executable", release_decision: "release", reason_codes: ["当前方案明确 ≤ 600 ms", "端到端时间戳测试已定义"] },
+  { requirement_id: "R-033", requirement: "跨设备时间同步", solution_coverage: "partial", verification_readiness: "missing", release_decision: "human_review", reason_codes: ["当前支持对齐；后续完善校正", "误差阈值尚未定义"] },
+];
+
+const changeImpactDemo = {
+  contract: "SolutionScope-v2.2-change-impact-worklist",
+  release_held: true,
+  changes: [{ change_id: "C-DEMO", change_type: "modified", rationale: "指标从 92% 调整为 95%", release_held: true, required_actions: ["recheck_solution_coverage", "recheck_verification_plan", "human_confirm_change"] }],
+};
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
+}
+
+function coverageLabel(status, kind) {
+  const labels = {
+    full: "完整覆盖", covered: "完整覆盖", partial: "部分覆盖", missing: "未覆盖", unknown: "无法判断",
+    executable: "可执行", not_executable: "不可执行", release: "有据通过",
+    pass_with_evidence: "有据通过", block_invariant_failure: "指标门禁阻断",
+    block_missing_solution: "阻断", block_missing_verification: "阻断", human_review: "人工确认",
+  };
+  return labels[status] || (kind === "decision" ? "人工确认" : String(status || "未提供"));
+}
+
+const reasonLabels = {
+  solution_partial: "方案承诺不完整",
+  verification_partial: "验收准备不完整",
+  source_ambiguity: "原文存在歧义",
+  unresolved_gap: "仍有信息缺口",
+  source_or_claim_conflict: "来源或承诺冲突",
+  lifecycle_mismatch: "当前状态与规划状态不一致",
+  solution_threshold_not_satisfied: "方案指标弱于要求",
+  verification_threshold_not_satisfied: "验收阈值未满足要求",
+  solution_unit_incompatible: "方案单位不可比",
+  verification_unit_incompatible: "验收单位不可比",
+  solution_metric_mismatch: "方案指标对象不一致",
+  verification_metric_mismatch: "验收指标对象不一致",
+  solution_criterion_not_observed: "方案未给出可核对指标",
+  verification_criterion_not_observed: "验收材料未给出可核对阈值",
+};
+
+const reviewActionLabels = {
+  recheck_solution_commitment: "重查方案承诺",
+  recheck_acceptance_criterion: "重查验收口径",
+  confirm_capability_lifecycle: "确认能力状态",
+  human_confirm_source_gap: "人工确认材料缺口",
+};
+
+function reasonLabel(code) {
+  return reasonLabels[code] || code || "暂无阻断原因";
+}
+
+function matrixEvidenceText(row, role) {
+  const count = role === "solution" ? row.solution_evidence_count : row.verification_evidence_count;
+  return `已绑定 ${count ?? 0} 项证据`;
+}
+
+function matrixGateDetails(row) {
+  const failures = row.failed_invariants || [];
+  const actions = row.required_actions || [];
+  if (!failures.length && !actions.length) {
+    return `<small>${escapeHtml((row.reason_codes || []).map(reasonLabel).join(" · ") || "要求、方案与验收口径一致")}</small>`;
+  }
+  return `<div class="matrix-invariant-details">
+    ${failures.map((failure) => `<p><b>${escapeHtml(reasonLabel(failure.code))}</b><span>${escapeHtml(failure.message)}</span></p>`).join("")}
+    ${actions.length ? `<div>${actions.map((action) => `<i>${escapeHtml(reviewActionLabels[action] || action)}</i>`).join("")}</div>` : ""}
+  </div>`;
+}
+
+function gateClass(decision) {
+  if (decision === "release" || decision === "pass_with_evidence") return "mint";
+  if (decision === "human_review") return "violet";
+  return "coral";
+}
+
 const icons = {
   arrow: '<path d="M5 12h14M14 7l5 5-5 5"/>',
   upload: '<path d="M12 16V3M7 8l5-5 5 5"/><path d="M4 15v5h16v-5"/>',
@@ -30,7 +110,7 @@ function nav() {
         <span class="logo-mark">S</span><span>Solution<em>Scope</em></span>
       </a>
       <nav class="nav-links" aria-label="主导航">
-        <a href="#evaluation">评测结果</a><a href="#product">产品体验</a><a href="#workflow">工作流</a>
+        <a href="#rag-boundary">与 RAG 的区别</a><a href="#product">产品体验</a><a href="#evaluation">评测结果</a>
       </nav>
       <div class="nav-actions">
         <span class="prototype-badge">VISUAL PROTOTYPE</span>
@@ -48,7 +128,7 @@ function hero() {
       <div class="hero-content reveal">
         <span class="eyebrow">AI PRODUCT LAB · CONTROLLED WORKFLOW</span>
         <h1>复杂材料，<span class="purple-block">拆开看。</span><br/>关键判断，<span class="mint-block">有据可查。</span></h1>
-        <p>把可研报告、技术方案和测试材料中的要求，整理成可以逐项追溯、逐项确认的审核结果。</p>
+        <p>把需求、方案与测试材料放到同一条证据链上：不只回答“材料说了什么”，还判断方案是否真正满足要求、验收是否能够执行。</p>
         <div class="hero-actions">
           <button class="button button-dark js-scroll-workbench">进入产品演示 ${icon("arrow")}</button>
           <a class="text-link" href="#workflow">先看它如何工作 <span>↓</span></a>
@@ -56,6 +136,57 @@ function hero() {
       </div>
       <div class="hero-ribbon" aria-label="产品能力">
         <span>REQUIREMENT EXTRACTION</span><i>✦</i><span>EVIDENCE TRACEABILITY</span><i>✦</i><span>GAP DISCOVERY</span><i>✦</i><span>HUMAN REVIEW</span>
+      </div>
+    </section>`;
+}
+
+function ragBoundaryStory() {
+  return `
+    <section class="rag-boundary-demo rag-boundary-lead" id="rag-boundary" aria-label="SolutionScope 相对普通 RAG 扩展的能力边界">
+      <div class="rag-boundary-heading">
+        <span class="eyebrow">REQUIREMENT ASSURANCE · BEYOND KNOWLEDGE Q&amp;A</span>
+        <h2>把技术要求，转化为<br/>可执行、可追溯的审核规则。</h2>
+        <p>检索只是证据入口。SolutionScope进一步建立“需求—方案—验收”的逐项对应关系：由模型理解材料、由程序检查硬约束，并把无法裁决的问题交给人工确认。</p>
+      </div>
+
+      <div class="boundary-expansion-flow">
+        <article class="boundary-flow-card boundary-rag-card">
+          <div><span>普通 RAG</span><small>RETRIEVE & ANSWER</small></div>
+          <h3>检索证据 → 生成回答</h3>
+          <p>大模型可以作出判断，但结论通常依赖一次生成；找到相关内容，也无法稳定证明方案逐项满足要求。</p>
+          <b>主要产出：一段综合回答</b>
+        </article>
+        <div class="boundary-expansion-arrow"><span>能力边界扩展</span><b>→</b></div>
+        <article class="boundary-flow-card boundary-scope-card">
+          <div><span>SolutionScope</span><small>REVIEW & GATE</small></div>
+          <h3>编译要求 → 核对覆盖 → 执行门禁</h3>
+          <p>把指标、状态和验收口径转化为审核对象，分别核对需求依据、方案承诺与测试方法，再输出处理动作。</p>
+          <b>主要产出：逐项审核结果与下一动作</b>
+        </article>
+      </div>
+
+      <div class="boundary-capability-grid" aria-label="SolutionScope 扩展的四类能力">
+        <article><span>01</span><b>要求原子化</b><p>拆出对象、动作、条件、指标和验收方式，形成能够逐项核对的审核单元。</p></article>
+        <article><span>02</span><b>三方覆盖关系</b><p>建立需求、方案与验收的对应关系，识别“材料提到了，但方案没有满足”。</p></article>
+        <article><span>03</span><b>确定性规则门禁</b><p>由程序统一单位、比较阈值并检查状态，硬约束不依赖模型临场判断。</p></article>
+        <article><span>04</span><b>审核与变更闭环</b><p>保留冲突、缺口、处理动作与变更影响，无法裁决时明确转交人工。</p></article>
+      </div>
+
+      <div class="boundary-proof-strip">
+        <article class="boundary-audit-record">
+          <div class="boundary-record-head"><span>覆盖判断示例 · 需求—方案—验收逐项核对</span><b>BLOCKED</b></div>
+          <dl>
+            <div><dt>需求要求</dt><dd>目标识别需达到明确的最低指标</dd><small>存在硬约束</small></div>
+            <div><dt>方案承诺</dt><dd>仅说明支持目标识别，未承诺最低指标</dd><small>覆盖不足</small></div>
+            <div><dt>验收方法</dt><dd>测试计划已设置指标与通过口径</dd><small>方法可执行</small></div>
+            <div class="boundary-record-result"><dt>审核结论</dt><dd>相关材料均已找到，但方案覆盖仍不成立</dd><small>阻断放行</small></div>
+            <div><dt>下一动作</dt><dd>补充方案指标承诺及适用条件后重新核对</dd><small>进入复核</small></div>
+          </dl>
+        </article>
+      </div>
+
+      <div class="boundary-responsibility-note">
+        <b>模型找证据并结构化</b><i>→</i><b>程序检查硬约束</b><i>→</i><b>人工确认真实口径</b>
       </div>
     </section>`;
 }
@@ -101,9 +232,9 @@ function scenarioIntro() {
       <div class="scenario-capability-bridge">
         <div class="capability-copy">
           <span class="eyebrow">WHY SOLUTIONSCOPE</span>
-          <h2>SolutionScope 的处理方式<br/>让每个判断都能被检查。</h2>
-          <p>系统先把散落在不同章节中的要求还原为完整结构，再区分当前能力、规划状态与待确认内容；关键结论必须绑定原文证据，材料没有说明的条件和验收口径则明确进入人工审核。</p>
-          <div class="capability-tags"><b>要求结构化</b><b>状态区分</b><b>证据追溯</b><b>缺口提示</b><b>人工门禁</b></div>
+          <h2>从“检索相关内容”，<br/>进一步走到“审核能否通过”。</h2>
+          <p>普通 RAG 擅长找到相关段落并组织答案；SolutionScope 把需求、方案和验收证据分开登记，再检查动作、状态、数值与判定口径是否闭环。模型负责定位和结构化，程序负责单位与阈值门禁，真实口径仍交给人确认。</p>
+          <div class="capability-tags"><b>来源角色隔离</b><b>状态区分</b><b>数值门禁</b><b>证据追溯</b><b>人工放行</b></div>
         </div>
         <div class="application-scenario-heading"><span>适合使用的场景</span><p>当材料低容错、模型能力受限，或多人需要共享同一判断依据时，结构化 Skill 与人工门禁比一次性生成更可靠。</p></div>
         <div class="application-scenario-grid">
@@ -212,12 +343,12 @@ function reviewPane() {
 
 function workflowPane() {
   const steps = [
-    ["01", "材料结构化", "分页、分段并记录章节与来源坐标", "coral", "file"],
-    ["02", "任务路由", "根据问题意图选择检索与审核路径", "violet", "route"],
-    ["03", "证据召回", "全局检索、邻段扩展与跨页合并", "cyan", "search"],
-    ["04", "结构输出", "按 Schema 生成要求、证据与缺口", "lime", "spark"],
-    ["05", "风险门禁", "检查无依据判断、状态漂移与冲突", "yellow", "shield"],
-    ["06", "人工确认", "接受、局部修改或标记无法判断", "white", "human"],
+    ["01", "来源分流", "将需求、方案和验收材料分角色登记", "coral", "file"],
+    ["02", "要求原子化", "拆分对象、动作、条件、指标与判定口径", "violet", "route"],
+    ["03", "证据规划", "按问题检索并合并跨页候选证据", "cyan", "search"],
+    ["04", "逐项覆盖", "分别核对方案承诺和验收准备", "lime", "spark"],
+    ["05", "确定性门禁", "统一单位、比较阈值并检查状态与版本", "yellow", "shield"],
+    ["06", "人工放行", "处理真实口径冲突并保留审核决定", "white", "human"],
   ];
   return `
     <section class="workflow-surface">
@@ -229,9 +360,9 @@ function workflowPane() {
           </article>`).join("")}
       </div>
       <div class="workflow-log">
-        <div><i></i><span>10:42:18</span><p>已定位 26 个候选要求，保留 18 个可追溯条目。</p></div>
-        <div><i></i><span>10:42:21</span><p>发现 3 个计划能力被误写为当前能力，已回退为待确认。</p></div>
-        <div><i></i><span>10:42:22</span><p>结构门禁通过；2 个状态冲突等待人工判断。</p></div>
+        <div><i></i><span>10:42:18</span><p>需求、方案与验收证据已分别登记，未允许跨角色替代。</p></div>
+        <div><i></i><span>10:42:21</span><p>发现方案承诺 90% 低于需求阈值 92%，已阻断放行。</p></div>
+        <div><i></i><span>10:42:22</span><p>600 ms 与 0.6 s 已归一为等价口径；状态冲突仍转人工确认。</p></div>
       </div>
     </section>`;
 }
@@ -239,17 +370,53 @@ function workflowPane() {
 function reportPane() {
   return `
     <section class="report-surface">
-      <div class="report-head"><div><span>DEVELOPMENT PILOT · N=6</span><h3>评测不是一个总分，<br/>而是一组能解释的风险。</h3></div><div class="report-status">描述性结果<br/><b>不代表泛化结论</b></div></div>
+      <div class="report-head"><div><span>DECISION AUDIT REPORT</span><h3>把“检索成功”和<br/>“审核通过”分开呈现。</h3></div><div class="report-status">脱敏演示结果<br/><b>不替代专家结论</b></div></div>
       <div class="report-grid">
-        <article class="metric-card coral-card"><span>未来能力误判为当前</span><strong>8 → 0</strong><small>同材料、同问题的来源约束风险</small><div class="metric-track"><i></i><b></b></div></article>
-        <article class="metric-card violet-card"><span>结构合同错误</span><strong>0</strong><small>最终输出进入人工审核所需的格式门槛</small><div class="zero-orbit">${icon("check")}</div></article>
-        <article class="metric-card mint-card"><span>保留人工判断</span><strong>HITL</strong><small>对时间轴状态冲突不自动裁决</small><div class="people-dots"><i>AI</i><b>人</b><span></span></div></article>
+        <article class="metric-card coral-card"><span>数值约束门禁</span><strong>90 &lt; 92</strong><small>相关段落已经找到，但方案阈值仍未达标</small><div class="metric-track"><i></i><b></b></div></article>
+        <article class="metric-card violet-card"><span>等价单位归一</span><strong>600 = 0.6</strong><small>ms 与 s 换算后通过，避免纯字符串误报</small><div class="zero-orbit">${icon("check")}</div></article>
+        <article class="metric-card mint-card"><span>真实口径保留人工判断</span><strong>HITL</strong><small>材料自身冲突时不由模型擅自裁决</small><div class="people-dots"><i>AI</i><b>人</b><span></span></div></article>
         <article class="comparison-card">
-          <div><span>直接提示</span><b>8</b><small>来源状态风险</small></div>
+          <div><span>普通 RAG</span><b>相关</b><small>能够找到三段材料</small></div>
           <div class="comparison-divider">VS</div>
-          <div><span>受控工作流</span><b>0</b><small>同口径风险</small></div>
-          <footer>仅用于展示当前开发样本中的差异，未建设独立保留集。</footer>
+          <div><span>SolutionScope</span><b>阻断</b><small>判断方案承诺不满足要求</small></div>
+          <footer>两者不是“是否检索到”的差异，而是“能否形成可审计放行决定”的差异。</footer>
         </article>
+      </div>
+    </section>`;
+}
+
+function coverageMatrixPane() {
+  const rows = importedCoveragePayload?.rows?.length ? importedCoveragePayload.rows : coverageDemoRows;
+  const changeImpact = importedChangeImpact || changeImpactDemo;
+  const primaryChange = changeImpact.changes?.find((change) => change.release_held) || changeImpact.changes?.[0];
+  const imported = Boolean(importedCoveragePayload || importedChangeImpact);
+  const sourceLabel = imported ? "本地运行结果" : "脱敏合成示例";
+  const actionLabels = {
+    recheck_solution_coverage: "重查方案承诺",
+    recheck_verification_plan: "重查测试阈值",
+    human_confirm_change: "人工确认变更",
+  };
+  return `
+    <section class="coverage-matrix-surface">
+      <div class="matrix-intro">
+        <div><span>THREE-SOURCE REVIEW · ${sourceLabel}</span><h3>不是“搜到相关段落”，<br/>而是检查需求有没有真正闭环。</h3></div>
+        <div class="matrix-intro-side"><p>同一项要求分别核对需求原文、方案承诺和验收方法。要求写了 92%、测试也写了 92%，但方案没有承诺 92%，依然不能通过。</p>
+          <div class="matrix-import-actions"><label>导入覆盖矩阵<input class="js-coverage-import" type="file" accept="application/json,.json"/></label><label>导入变更影响<input class="js-impact-import" type="file" accept="application/json,.json"/></label>${imported ? '<button class="js-reset-matrix">恢复示例</button>' : ''}</div>
+          <small class="matrix-local-note">仅在浏览器本地解析，不上传文件。</small>
+        </div>
+      </div>
+      <div class="coverage-table" role="table" aria-label="需求方案验收三方覆盖矩阵">
+        <div class="coverage-row coverage-header" role="row"><b>原子要求</b><b>方案响应</b><b>验收准备</b><b>门禁</b></div>
+        ${rows.map((row) => `<div class="coverage-row" role="row">
+          <div><small>${escapeHtml(row.requirement_id)}</small><strong>${escapeHtml(row.requirement)}</strong></div>
+          <div><strong>${escapeHtml(coverageLabel(row.solution_coverage))}</strong><span>${escapeHtml(matrixEvidenceText(row, "solution"))}</span></div>
+          <div><strong>${escapeHtml(coverageLabel(row.verification_readiness))}</strong><span>${escapeHtml(matrixEvidenceText(row, "verification"))}</span></div>
+          <div class="matrix-gate-cell"><em class="matrix-gate ${gateClass(row.release_decision)}">${escapeHtml(coverageLabel(row.release_decision, "decision"))}</em>${matrixGateDetails(row)}</div>
+        </div>`).join("")}
+      </div>
+      <div class="change-impact-card">
+        <div><span>REQUIREMENT CHANGE IMPACT</span><h4>${escapeHtml(primaryChange?.rationale || "当前未发现要求变更")}</h4><small>${escapeHtml(primaryChange?.change_id || "NO CHANGE")} · ${escapeHtml(primaryChange?.change_type || "unchanged")}</small></div>
+        <div class="impact-flow"><b>需求变更</b>${(primaryChange?.required_actions || []).map((action) => `<i>→</i><b>${escapeHtml(actionLabels[action] || action)}</b>`).join("")}<i>→</i><strong>${primaryChange?.release_held ? "保持放行冻结" : "保留原结论"}</strong></div>
       </div>
     </section>`;
 }
@@ -267,15 +434,22 @@ function productDemo() {
             ${reviewPane()}
           </div>
         </section>
+        <section class="demo-block demo-block-matrix reveal" id="coverage-matrix">
+          <div class="demo-block-heading"><span class="demo-block-index">02</span><div><small>REQUIREMENT → SOLUTION → TEST</small><h3>三方覆盖矩阵</h3><p>分开检查要求、方案承诺和验收方法；任何一侧缺失，都保留具体阻断原因。</p></div><b>闭环可查</b></div>
+          <div class="product-shell product-shell-matrix">
+            <div class="window-bar"><div><i></i><i></i><i></i></div><span>app.solutionscope.local / coverage</span><b>V2.2</b></div>
+            ${coverageMatrixPane()}
+          </div>
+        </section>
         <section class="demo-block demo-block-workflow reveal" id="workflow-run">
-          <div class="demo-block-heading"><span class="demo-block-index">02</span><div><small>CONTROLLED PIPELINE</small><h3>工作流运行</h3><p>把材料导入、证据绑定、结构校验和人工门禁拆成可检查的处理阶段。</p></div><b>过程可见</b></div>
+          <div class="demo-block-heading"><span class="demo-block-index">03</span><div><small>CONTROLLED PIPELINE</small><h3>工作流运行</h3><p>把材料导入、证据绑定、结构校验和人工门禁拆成可检查的处理阶段。</p></div><b>过程可见</b></div>
           <div class="product-shell product-shell-workflow">
             <div class="window-bar"><div><i></i><i></i><i></i></div><span>app.solutionscope.local / workflow</span><b>LOCAL RUN</b></div>
             ${workflowPane()}
           </div>
         </section>
         <section class="demo-block demo-block-report reveal" id="evaluation-report">
-          <div class="demo-block-heading"><span class="demo-block-index">03</span><div><small>REVIEW EVIDENCE</small><h3>评测报告</h3><p>分开呈现审核进度、结构门禁与仍需人工处理的问题，不用单一总分掩盖风险。</p></div><b>结果可解释</b></div>
+          <div class="demo-block-heading"><span class="demo-block-index">04</span><div><small>REVIEW EVIDENCE</small><h3>评测报告</h3><p>分开呈现审核进度、结构门禁与仍需人工处理的问题，不用单一总分掩盖风险。</p></div><b>结果可解释</b></div>
           <div class="product-shell product-shell-report">
             <div class="window-bar"><div><i></i><i></i><i></i></div><span>app.solutionscope.local / report</span><b>DEV PILOT</b></div>
             ${reportPane()}
@@ -289,7 +463,7 @@ function workflowStory() {
   return `
     <section class="story-section" id="workflow">
       <div class="story-grid">
-        <article class="story-main reveal"><span class="eyebrow">WORKFLOW, NOT MAGIC</span><h2>AI 做初筛，<br/>人来做决定。</h2><p>系统不试图替代领域判断，而是把材料拆成可以被检查的要求、证据与问题。</p><button class="button button-coral js-open-pane" data-scroll-target="workflow-run">查看运行过程 ${icon("arrow")}</button></article>
+        <article class="story-main reveal"><span class="eyebrow">MODEL + RULES + HUMAN</span><h2>模型找证据，<br/>规则守边界，人来放行。</h2><p>系统不把生成答案当成终点，而是把要求、方案和验收逐项连接；能确定的数值与状态交给程序检查，材料无法裁决的真实口径交给人。</p><button class="button button-coral js-open-pane" data-scroll-target="workflow-run">查看运行过程 ${icon("arrow")}</button></article>
         <article class="story-stat reveal"><span>关键标识召回</span><strong>+33.3 pp</strong><small>规则对齐 A/B · 74/111 → 111/111 · DEV n=6</small><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></article>
         <article class="story-risk reveal"><div class="icon-tile">${icon("shield")}</div><span>风险不是隐藏</span><h3>原文没说的，<br/>系统不会替它说。</h3><div><b>缺口</b><b>冲突</b><b>待确认</b></div></article>
         <article class="story-source reveal"><span>ORIGINAL SOURCE</span><blockquote>“采集数据保留来源、时间、设备、文件校验值……”</blockquote><p><i></i> 已绑定证据 E-12</p></article>
@@ -300,7 +474,7 @@ function workflowStory() {
 function evaluationStory() {
   return `
     <section class="evaluation-section" id="evaluation">
-      <div class="evaluation-copy reveal"><span class="eyebrow">MODEL EVALUATION</span><h2>同一轻量模型，<br/>少漏掉关键要求。</h2><p>两份 492 页与 733 页的公开标准按问题检索相关片段；在相同 <b>gpt-5.4-mini / low</b>、相同 6 个案例和证据候选下，受控工作流主要改善要求召回，同时保持证据绑定与验收边界判断不退化。</p><button class="button button-dark js-open-pane" data-scroll-target="evaluation-report">打开评测报告 ${icon("chart")}</button></div>
+      <div class="evaluation-copy reveal"><span class="eyebrow">MODEL EVALUATION</span><h2>提升来自流程约束，<br/>不是模型突然变聪明。</h2><p>在两份 492 页与 733 页的公开标准上，使用相同轻量模型和相同案例进行开发集对照：受控工作流让模型先建立覆盖清单、再逐项回答，主要减少关键要求与评估对象被摘要压缩的问题；数值达标、状态冲突和最终放行则由独立门禁处理。</p><button class="button button-dark js-open-pane" data-scroll-target="evaluation-report">打开评测报告 ${icon("chart")}</button></div>
       <div class="evaluation-visual reveal">
         <div class="eval-header"><span>FROZEN DEVELOPMENT PILOT</span><b>gpt-5.4-mini / low · n=6</b></div>
         <div class="metric-compare-list">
@@ -337,7 +511,7 @@ function footer() {
 }
 
 function render() {
-  document.getElementById("app").innerHTML = `${nav()}${hero()}${evaluationStory()}${productDemo()}${workflowStory()}${footer()}`;
+  document.getElementById("app").innerHTML = `${nav()}${hero()}${ragBoundaryStory()}${evaluationStory()}${productDemo()}${workflowStory()}${footer()}`;
   bindInteractions();
   observeReveals();
 }
@@ -367,6 +541,43 @@ function bindInteractions() {
     event.currentTarget.classList.add("approved");
     toast("演示状态已更新；刷新页面即可重置");
   });
+  document.querySelector(".js-coverage-import")?.addEventListener("change", (event) => importLocalJson(event, "coverage"));
+  document.querySelector(".js-impact-import")?.addEventListener("change", (event) => importLocalJson(event, "impact"));
+  document.querySelector(".js-reset-matrix")?.addEventListener("click", () => {
+    importedCoveragePayload = null;
+    importedChangeImpact = null;
+    renderAndReturnToMatrix("已恢复脱敏合成示例");
+  });
+}
+
+function renderAndReturnToMatrix(message) {
+  render();
+  requestAnimationFrame(() => document.getElementById("coverage-matrix")?.scrollIntoView({ block: "start" }));
+  requestAnimationFrame(() => toast(message));
+}
+
+function importLocalJson(event, kind) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const payload = JSON.parse(reader.result);
+      if (kind === "coverage") {
+        if (!["SolutionScope-v2.1-ui-coverage-payload", "SolutionScope-v2.2-ui-coverage-payload"].includes(payload.contract) || !Array.isArray(payload.rows)) throw new Error("覆盖矩阵合同不匹配");
+        importedCoveragePayload = payload;
+      } else {
+        if (!["SolutionScope-v2.1-change-impact-worklist", "SolutionScope-v2.2-change-impact-worklist"].includes(payload.contract) || !Array.isArray(payload.changes)) throw new Error("变更影响合同不匹配");
+        importedChangeImpact = payload;
+      }
+      renderAndReturnToMatrix(`已载入${kind === "coverage" ? "覆盖矩阵" : "变更影响"}：${file.name}`);
+    } catch (error) {
+      toast(`导入失败：${error.message}`);
+      event.target.value = "";
+    }
+  };
+  reader.onerror = () => toast("文件读取失败，请重新选择");
+  reader.readAsText(file);
 }
 
 function observeReveals() {

@@ -1,0 +1,29 @@
+{
+  "contract": "SolutionScope-v2.1-requirement-atoms",
+  "requirements": [
+    {
+      "requirement_id": "R-001",
+      "requirement_object": "vessel perception system",
+      "required_action": "detect vessels",
+      "normative_strength": "must",
+      "lifecycle_state": "current",
+      "conditions": ["at a distance of 4 km", "under the declared operating conditions"],
+      "quantitative_criteria": [{"metric": "recognition rate", "operator": ">=", "threshold": "95", "unit": "%"}],
+      "verification_expectations": ["recognition test under the declared operating conditions"],
+      "requirement_evidence_ids": ["REQ-P001-001"],
+      "ambiguities": ["The declared operating conditions are not defined in the requirement text."]
+    },
+    {
+      "requirement_id": "R-002",
+      "requirement_object": "situation-awareness pipeline",
+      "required_action": "limit end-to-end latency",
+      "normative_strength": "must",
+      "lifecycle_state": "current",
+      "conditions": ["from sensor timestamp to risk-output timestamp"],
+      "quantitative_criteria": [{"metric": "end-to-end latency", "operator": "<=", "threshold": "600", "unit": "ms"}],
+      "verification_expectations": ["timestamp-based end-to-end latency test"],
+      "requirement_evidence_ids": ["REQ-P002-001"],
+      "ambiguities": []
+    }
+  ]
+}
