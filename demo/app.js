@@ -151,14 +151,14 @@ function ragBoundaryStory() {
 
       <div class="boundary-expansion-flow">
         <article class="boundary-flow-card boundary-rag-card">
-          <div><span>普通 RAG</span><small>RETRIEVE & ANSWER</small></div>
+          <div class="boundary-product-head"><span class="boundary-product-name boundary-product-name-rag">普通 RAG</span><small>RETRIEVE & ANSWER</small></div>
           <h3>检索证据 → 生成回答</h3>
           <p>大模型可以作出判断，但结论通常依赖一次生成；找到相关内容，也无法稳定证明方案逐项满足要求。</p>
           <b>主要产出：一段综合回答</b>
         </article>
         <div class="boundary-expansion-arrow"><span>能力边界扩展</span><b>→</b></div>
         <article class="boundary-flow-card boundary-scope-card">
-          <div><span>SolutionScope</span><small>REVIEW & GATE</small></div>
+          <div class="boundary-product-head"><span class="boundary-product-name boundary-product-name-scope">SolutionScope</span><small>REVIEW & GATE</small></div>
           <h3>编译要求 → 核对覆盖 → 执行门禁</h3>
           <p>把指标、状态和验收口径转化为审核对象，分别核对需求依据、方案承诺与测试方法，再输出处理动作。</p>
           <b>主要产出：逐项审核结果与下一动作</b>

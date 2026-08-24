@@ -116,6 +116,10 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .boundary-flow-card { min-height: 300px; padding: 30px; display: flex; flex-direction: column; border: var(--border); border-radius: 25px; box-shadow: 7px 7px 0 var(--ink); }
 .boundary-flow-card > div { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .boundary-flow-card > div span { font-size: 18px; font-weight: 900; }
+.boundary-product-head { align-items: flex-start !important; }
+.boundary-product-name { display: inline-flex; align-items: center; min-height: 52px; padding: 8px 15px 10px; border: 2px solid var(--ink); border-radius: 13px; box-shadow: 4px 4px 0 var(--ink); font-size: clamp(26px,2.25vw,36px) !important; line-height: .94; letter-spacing: -.045em; }
+.boundary-product-name-rag { background: var(--coral); }
+.boundary-product-name-scope { background: var(--mint); }
 .boundary-flow-card > div small { font: 700 9px/1.2 "Azeret Mono", monospace; letter-spacing: .08em; }
 .boundary-flow-card h3 { margin: 50px 0 14px; font-size: clamp(30px,2.8vw,43px); line-height: 1.02; letter-spacing: -.055em; }
 .boundary-flow-card p { max-width: 540px; margin: 0; font-size: 16px; line-height: 1.65; opacity: .76; }
@@ -618,6 +622,7 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
   .rag-boundary-heading h2 { font-size: 38px; }
   .rag-boundary-heading p { font-size: 15px; }
   .boundary-flow-card { min-height: 270px; padding: 23px; }
+  .boundary-product-name { min-height: 46px; padding: 7px 12px 9px; font-size: 25px !important; }
   .boundary-flow-card h3 { margin-top: 37px; font-size: 31px; }
   .boundary-capability-grid, .boundary-proof-strip { grid-template-columns: 1fr; }
   .boundary-capability-grid article { min-height: 190px; }
