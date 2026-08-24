@@ -133,13 +133,15 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .boundary-expansion-arrow b { width: 58px; height: 58px; display: grid; place-items: center; color: var(--ink); border: var(--border); border-radius: 50%; background: var(--mint); box-shadow: 4px 4px 0 var(--ink); font-size: 28px; }
 .boundary-capability-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
 .boundary-capability-grid article { min-height: 230px; padding: 22px; display: flex; flex-direction: column; border: 1.7px solid var(--ink); border-radius: 20px; box-shadow: 4px 4px 0 var(--ink); background: var(--white); }
-.boundary-capability-grid article:nth-child(1) { background: #fff4cc; }
-.boundary-capability-grid article:nth-child(2) { background: #ffe2d9; }
-.boundary-capability-grid article:nth-child(3) { background: #e7ddff; }
-.boundary-capability-grid article:nth-child(4) { background: #dff9f4; }
+.boundary-capability-grid article:nth-child(1) { color: #fff; background: var(--ink); }
+.boundary-capability-grid article:nth-child(2) { background: var(--coral); }
+.boundary-capability-grid article:nth-child(3) { background: var(--violet-soft); }
+.boundary-capability-grid article:nth-child(4) { background: var(--yellow); }
+.boundary-capability-grid article:nth-child(1) p { color: rgba(255,255,255,.76); }
+.boundary-capability-grid article:nth-child(1) span { border-color: rgba(255,255,255,.86); background: rgba(255,255,255,.12); }
 .boundary-capability-grid span { width: 42px; height: 34px; display: grid; place-items: center; border: 1.5px solid var(--ink); border-radius: 10px; background: rgba(255,255,255,.42); font: 800 9px "Azeret Mono", monospace; }
 .boundary-capability-grid b { display: block; margin-top: 29px; font-size: 20px; line-height: 1.18; letter-spacing: -.035em; }
-.boundary-capability-grid p { margin: 12px 0 0; color: #5f5668; font-size: 14px; line-height: 1.58; }
+.boundary-capability-grid p { margin: 12px 0 0; color: rgba(27,22,38,.72); font-size: 14px; line-height: 1.58; }
 .boundary-proof-strip { margin-top: 28px; display: grid; grid-template-columns: 1fr; gap: 14px; }
 .boundary-proof-strip article { min-height: 206px; padding: 26px; border: var(--border); border-radius: 22px; box-shadow: 5px 5px 0 var(--ink); }
 .boundary-proof-strip article > span { display: block; font: 700 10px/1.3 "Azeret Mono", monospace; letter-spacing: .06em; }
