@@ -12,6 +12,8 @@ SolutionScope 针对技术材料中“要求写了、方案提了、验收也有
 
 在线页面使用脱敏合成数据，集中展示三方材料对齐、证据定位、指标门禁、冲突保留与人工审核流程。
 
+![SolutionScope 当前产品首页](docs/assets/01-home-current.png)
+
 ## 一眼看懂：它把 RAG 的证据变成什么
 
 RAG负责寻找相关证据，大模型也可以据此给出一次判断；SolutionScope的差异，是把这种判断固化为可执行、可追溯的审核流程：**要求原子化、需求—方案—验收三方覆盖判断、确定性指标门禁，以及变更复核与人工放行**。
@@ -74,9 +76,17 @@ RAG负责寻找相关证据，大模型也可以据此给出一次判断；Solut
 
 ## 产品原型
 
-![语义审核工作台](docs/assets/review-workbench-v3.png)
+### 与普通 RAG 的能力边界
 
-![三层门禁与阶段决策](docs/assets/decision-gates-v3.png)
+![普通 RAG 与 SolutionScope 的能力边界](docs/assets/02-rag-boundary-current.png)
+
+### 可交互审核工作台
+
+![SolutionScope 当前审核工作台](docs/assets/03-review-workbench-current.png)
+
+### 开发集评测结果
+
+![SolutionScope 当前评测结果](docs/assets/04-evaluation-current.png)
 
 ## 快速检查
 
