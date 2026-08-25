@@ -14,17 +14,13 @@ SolutionScope 针对技术材料中“要求写了、方案提了、验收也有
 
 ![SolutionScope 当前产品首页](docs/assets/01-home-current.png)
 
-## 一眼看懂：它把 RAG 的证据变成什么
+## 能力扩展：从检索回答到逐项审核
 
-RAG负责寻找相关证据，大模型也可以据此给出一次判断；SolutionScope的差异，是把这种判断固化为可执行、可追溯的审核流程：**要求原子化、需求—方案—验收三方覆盖判断、确定性指标门禁，以及变更复核与人工放行**。
+SolutionScope 将材料中的相关证据继续编译为**要求原子、三方覆盖关系、确定性门禁与人工复核动作**。模型负责理解与结构化，程序负责状态、单位和阈值判断，人工负责材料无法裁决的真实口径。
 
-例如，需求材料规定了最低指标，验收材料也设置了通过口径，但方案只写“支持该能力”而没有作出最低指标承诺。相关内容虽然都能被检索到，系统仍会判定方案覆盖不足，阻断当前放行并生成复核动作。
+最终产出从一段综合回答扩展为：逐项审核状态、原文依据、阻断原因和下一动作。例如，需求规定最低指标、验收也给出通过口径，但方案只写“支持该能力”而未承诺最低指标时，系统会将其判为覆盖不足并生成复核动作。
 
-这里的技术重点不是声称大模型“不会判断”，而是把能力分工固定下来：**模型负责定位与结构化，程序负责状态、单位和阈值门禁，人工负责材料无法裁决的真实口径。**最终交付的不是一段综合回答，而是逐项审核状态、依据、阻断原因和下一动作。
-
-## 它为什么不是普通 RAG
-
-普通 RAG 回答“材料里说了什么”；SolutionScope v2.2 进一步判断：
+当前可审核的能力包括：
 
 1. 每项要求包含哪些动作、条件和量化指标；
 2. 方案材料是否逐项作出响应，而不是只出现相关术语；
@@ -34,7 +30,7 @@ RAG负责寻找相关证据，大模型也可以据此给出一次判断；Solut
 6. 要求版本发生变化后，哪些方案承诺、验收方法和放行结论必须重新确认。
 7. 方案和验收口径中的数值、单位与上下限，是否真的满足要求，而不是只看语义相关。
 
-要求、方案和验收证据具有不同角色，不能互相替代。模型只负责逐组件判断，最终覆盖状态、放行结论和变更复核任务由确定性规则派生。可先阅读精简的 [`v2.2 功能说明`](docs/v2-2-product-capability-brief.md)，完整边界与案例见 [`与普通 RAG 的边界及产品深化`](docs/v2-rag-boundary-and-product-deepening.md)。
+要求、方案和验收证据具有不同角色，不能互相替代。模型只负责逐组件判断，最终覆盖状态、放行结论和变更复核任务由确定性规则派生。可先阅读精简的 [`v2.2 功能说明`](docs/v2-2-product-capability-brief.md)，完整设计与案例见 [`产品深化说明`](docs/v2-rag-boundary-and-product-deepening.md)。
 
 ## 核心产品判断
 
@@ -74,19 +70,49 @@ RAG负责寻找相关证据，大模型也可以据此给出一次判断；Solut
 | 旧版当前入口 | `skill/solutionscope/` | 单文档离线准备、登记、校验、组装和报告链路 |
 | 审核决策原型 | `prototype/review-decision-v2/` | 本地审核、三层门禁、决策卡导出 |
 
-## 产品原型
+## 产品演示：按实际审核顺序浏览
 
-### 与普通 RAG 的能力边界
+### 01 · 产品场景
 
-![普通 RAG 与 SolutionScope 的能力边界](docs/assets/02-rag-boundary-current.png)
+从技术方案、可研与验收材料中的真实审核问题切入。
 
-### 可交互审核工作台
+![SolutionScope 产品场景](docs/assets/01-home-current.png)
 
-![SolutionScope 当前审核工作台](docs/assets/03-review-workbench-current.png)
+### 02 · 能力扩展
 
-### 开发集评测结果
+从“检索证据并回答”扩展到“编译要求、核对覆盖并执行门禁”。
 
-![SolutionScope 当前评测结果](docs/assets/04-evaluation-current.png)
+![SolutionScope 能力扩展](docs/assets/02-capability-expansion-current.png)
+
+### 03 · 效果验证
+
+在相同轻量模型、相同冻结案例下，分别展示关键标识、评估目标和评估方法的召回变化。
+
+![SolutionScope 开发集评测](docs/assets/03-evaluation-current.png)
+
+### 04 · 审核工作台
+
+对照原文、AI 草稿和结构化字段，逐项接受、修改或转人工判断。
+
+![SolutionScope 审核工作台](docs/assets/04-review-workbench-current.png)
+
+### 05 · 三方覆盖矩阵
+
+分别核对需求要求、方案承诺与验收方法，避免相关材料互相替代。
+
+![SolutionScope 三方覆盖矩阵](docs/assets/05-coverage-matrix-current.png)
+
+### 06 · 工作流运行
+
+展示导入、证据规划、结构校验、规则门禁和人工复核的处理过程。
+
+![SolutionScope 工作流运行](docs/assets/06-workflow-run-current.png)
+
+### 07 · 审核报告
+
+分开呈现审核进度、门禁结果、风险项与下一动作。
+
+![SolutionScope 审核报告](docs/assets/07-review-report-current.png)
 
 ## 快速检查
 

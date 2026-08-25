@@ -110,7 +110,7 @@ function nav() {
         <span class="logo-mark">S</span><span>Solution<em>Scope</em></span>
       </a>
       <nav class="nav-links" aria-label="主导航">
-        <a href="#rag-boundary">与 RAG 的区别</a><a href="#product">产品体验</a><a href="#evaluation">评测结果</a>
+        <a href="#rag-boundary">能力扩展</a><a href="#product">产品体验</a><a href="#evaluation">评测结果</a>
       </nav>
       <div class="nav-actions">
         <span class="prototype-badge">VISUAL PROTOTYPE</span>
@@ -123,8 +123,8 @@ function hero() {
   return `
     <section class="hero" id="top">
       <div class="hero-blob blob-coral"></div><div class="hero-blob blob-violet"></div><div class="hero-blob blob-mint"></div>
-      <div class="sticker sticker-left">不是更长的 Prompt</div>
-      <div class="sticker sticker-right">是更清楚的边界 ✦</div>
+      <div class="sticker sticker-left">证据先行</div>
+      <div class="sticker sticker-right">边界清楚 ✦</div>
       <div class="hero-content reveal">
         <span class="eyebrow">AI PRODUCT LAB · CONTROLLED WORKFLOW</span>
         <h1>复杂材料，<span class="purple-block">拆开看。</span><br/>关键判断，<span class="mint-block">有据可查。</span></h1>
@@ -142,7 +142,7 @@ function hero() {
 
 function ragBoundaryStory() {
   return `
-    <section class="rag-boundary-demo rag-boundary-lead" id="rag-boundary" aria-label="SolutionScope 相对普通 RAG 扩展的能力边界">
+    <section class="rag-boundary-demo rag-boundary-lead" id="rag-boundary" aria-label="SolutionScope 从检索回答扩展到逐项审核的能力">
       <div class="rag-boundary-heading">
         <span class="eyebrow">REQUIREMENT ASSURANCE · BEYOND KNOWLEDGE Q&amp;A</span>
         <h2>把技术要求，转化为<br/>可执行、可追溯的审核规则。</h2>
@@ -425,7 +425,7 @@ function productDemo() {
   return `
     <section class="product-section" id="product">
       ${scenarioIntro()}
-      <div class="section-heading reveal"><div><span class="eyebrow">LIVE PRODUCT PREVIEW</span><h2>下面不是一张效果图，<br/>是一段完整的审核体验。</h2></div><p>这里使用合成内容演示信息层级与交互，不读取真实项目材料，也不调用任何模型。</p></div>
+      <div class="section-heading reveal"><div><span class="eyebrow">LIVE PRODUCT PREVIEW</span><h2>从原文核对到放行判断，<br/>完整走一遍审核流程。</h2></div><p>使用脱敏合成内容演示证据定位、覆盖判断、人工复核与报告输出。</p></div>
       <div class="demo-stack">
         <section class="demo-block demo-block-review reveal" id="review-workbench">
           <div class="demo-block-heading"><span class="demo-block-index">01</span><div><small>CORE INTERACTION</small><h3>审核工作台</h3><p>对照原文逐项核对要求、证据、缺口与验收口径，并保留人工决定。</p></div><b>可交互</b></div>
@@ -474,7 +474,7 @@ function workflowStory() {
 function evaluationStory() {
   return `
     <section class="evaluation-section" id="evaluation">
-      <div class="evaluation-copy reveal"><span class="eyebrow">MODEL EVALUATION</span><h2>提升来自流程约束，<br/>不是模型突然变聪明。</h2><p>在两份 492 页与 733 页的公开标准上，使用相同轻量模型和相同案例进行开发集对照：受控工作流让模型先建立覆盖清单、再逐项回答，主要减少关键要求与评估对象被摘要压缩的问题；数值达标、状态冲突和最终放行则由独立门禁处理。</p><button class="button button-dark js-open-pane" data-scroll-target="evaluation-report">打开评测报告 ${icon("chart")}</button></div>
+      <div class="evaluation-copy reveal"><span class="eyebrow">MODEL EVALUATION</span><h2>受控工作流，<br/>减少长材料中的关键遗漏。</h2><p>在两份 492 页与 733 页的公开标准上，使用相同轻量模型和相同案例进行开发集对照：先建立证据规划和覆盖清单，再逐项回答；关键标识、评估目标和评估方法召回均获得提升，同时保持证据绑定与验收边界判断。</p><button class="button button-dark js-open-pane" data-scroll-target="evaluation-report">打开评测报告 ${icon("chart")}</button></div>
       <div class="evaluation-visual reveal">
         <div class="eval-header"><span>FROZEN DEVELOPMENT PILOT</span><b>gpt-5.4-mini / low · n=6</b></div>
         <div class="metric-compare-list">
