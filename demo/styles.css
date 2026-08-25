@@ -133,7 +133,7 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .boundary-expansion-arrow b { width: 58px; height: 58px; display: grid; place-items: center; color: var(--ink); border: var(--border); border-radius: 50%; background: var(--mint); box-shadow: 4px 4px 0 var(--ink); font-size: 28px; }
 .boundary-capability-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
 .boundary-capability-grid article { min-height: 230px; padding: 22px; display: flex; flex-direction: column; border: 1.7px solid var(--ink); border-radius: 20px; box-shadow: 4px 4px 0 var(--ink); background: var(--white); }
-.boundary-capability-grid article:nth-child(1) { color: #fff; background: var(--ink); }
+.boundary-capability-grid article:nth-child(1) { color: #fff; background: #55515e; }
 .boundary-capability-grid article:nth-child(2) { background: var(--coral); }
 .boundary-capability-grid article:nth-child(3) { background: var(--violet-soft); }
 .boundary-capability-grid article:nth-child(4) { background: var(--yellow); }
@@ -145,7 +145,7 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .boundary-proof-strip { margin-top: 28px; display: grid; grid-template-columns: 1fr; gap: 14px; }
 .boundary-proof-strip article { min-height: 206px; padding: 26px; border: var(--border); border-radius: 22px; box-shadow: 5px 5px 0 var(--ink); }
 .boundary-proof-strip article > span { display: block; font: 700 10px/1.3 "Azeret Mono", monospace; letter-spacing: .06em; }
-.boundary-audit-record { color: #fff; background: var(--ink); }
+.boundary-audit-record { color: #fff; background: #4f86d8; }
 .boundary-record-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .boundary-record-head > span { font: 700 10px/1.3 "Azeret Mono", monospace; letter-spacing: .06em; }
 .boundary-record-head > b { padding: 7px 10px; color: var(--ink); border-radius: 999px; background: var(--coral); font: 900 10px/1 "Azeret Mono", monospace; letter-spacing: .05em; }
