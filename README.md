@@ -20,6 +20,25 @@ SolutionScope 将材料中的相关证据继续编译为**要求原子、三方�
 
 最终产出从一段综合回答扩展为：逐项审核状态、原文依据、阻断原因和下一动作。例如，需求规定最低指标、验收也给出通过口径，但方案只写“支持该能力”而未承诺最低指标时，系统会将其判为覆盖不足并生成复核动作。
 
+### 一个完整审核场景
+
+以“感知方案能否进入验收”为例，三类材料看似都提到了识别率和时延，但承担的证明责任并不相同：
+
+| 检查项 | 要求材料 | 方案当前表述 | 验收材料 | 审核结论 |
+| --- | --- | --- | --- | --- |
+| 识别率 | 低能见度下 ≥92% | 当前 90%，后续优化至 92% | ≥92% 判定通过 | 当前能力未覆盖，阻断 |
+| 感知时延 | ≤600ms | 仅支持记录输入、输出时间戳 | ≤0.6s 判定通过 | 方法可执行，但达标证据缺失 |
+
+一次检索式回答可能把三段相关内容组合成“基本具备验收条件”；SolutionScope 则先区分**最低要求、当前能力、规划能力和验收阈值**，再由程序完成 `0.6s = 600ms` 的单位换算和上下限比较。支持记录时间戳只证明“能够测量”，不能证明“已经达标”；材料无法裁决的真实口径继续交给人工。
+
+当客户把识别率由 92% 提高到 95% 时，系统还会冻结旧结论，定位受影响的方案承诺与验收口径，并生成复核任务，而不是只重新生成一段回答。
+
+![同一场景中的三类来源材料](docs/assets/02b-review-case-current.png)
+
+![检索式回答与可复核审核状态](docs/assets/02c-review-decision-current.png)
+
+![最终阻断结论与补充任务](docs/assets/02d-review-outcome-current.png)
+
 当前可审核的能力包括：
 
 1. 每项要求包含哪些动作、条件和量化指标；
@@ -84,31 +103,43 @@ SolutionScope 将材料中的相关证据继续编译为**要求原子、三方�
 
 ![SolutionScope 能力扩展](docs/assets/02-capability-expansion-current.png)
 
-### 03 · 效果验证
+### 03 · 完整审核案例
+
+从三类材料进入审核状态：区分当前与规划能力、比较指标口径，并输出阻断原因和补充任务。
+
+![三类来源材料](docs/assets/02b-review-case-current.png)
+
+![审核状态与职责分工](docs/assets/02c-review-decision-current.png)
+
+![审核结论与下一动作](docs/assets/02d-review-outcome-current.png)
+
+### 04 · 效果验证
 
 在相同轻量模型、相同冻结案例下，分别展示关键标识、评估目标和评估方法的召回变化。
 
 ![SolutionScope 开发集评测](docs/assets/03-evaluation-current.png)
 
-### 04 · 审核工作台
+### 05 · 审核工作台
 
 对照原文、AI 草稿和结构化字段，逐项接受、修改或转人工判断。
 
 ![SolutionScope 审核工作台](docs/assets/04-review-workbench-current.png)
 
-### 05 · 三方覆盖矩阵
+![SolutionScope 审核详情与人工操作](docs/assets/04b-review-detail-current.png)
+
+### 06 · 三方覆盖矩阵
 
 分别核对需求要求、方案承诺与验收方法，避免相关材料互相替代。
 
 ![SolutionScope 三方覆盖矩阵](docs/assets/05-coverage-matrix-current.png)
 
-### 06 · 工作流运行
+### 07 · 工作流运行
 
 展示导入、证据规划、结构校验、规则门禁和人工复核的处理过程。
 
 ![SolutionScope 工作流运行](docs/assets/06-workflow-run-current.png)
 
-### 07 · 审核报告
+### 08 · 审核报告
 
 分开呈现审核进度、门禁结果、风险项与下一动作。
 

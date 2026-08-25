@@ -165,6 +165,57 @@ function ragBoundaryStory() {
         </article>
       </div>
 
+      <div class="boundary-case-heading">
+        <span class="eyebrow">ONE SCENARIO · THREE SOURCE ROLES · ONE REVIEW STATE</span>
+        <h3>同样三段相关文字，为什么不能直接得出“可以验收”？</h3>
+        <p>关键不在于能否检索到内容，而在于能否区分要求、当前承诺与验收阈值，并按照同一套规则逐项处理。</p>
+      </div>
+
+      <div class="rag-source-triplet" aria-label="感知方案验收案例的三类材料">
+        <article class="rag-source-card source-requirement">
+          <span>要求材料</span><small>REQUIREMENT</small>
+          <strong>识别率 ≥ 92%<br/>感知时延 ≤ 600ms</strong>
+          <p>低能见度条件下的最低能力要求，属于必须满足的硬约束。</p>
+        </article>
+        <article class="rag-source-card source-solution">
+          <span>方案材料</span><small>SOLUTION</small>
+          <strong>当前 90%<br/>后续优化至 92%</strong>
+          <p>仅说明支持记录输入、输出时间戳；没有承诺实际时延已经达标。</p>
+        </article>
+        <article class="rag-source-card source-verification">
+          <span>验收材料</span><small>VERIFICATION</small>
+          <strong>识别率 ≥ 92%<br/>时延 ≤ 0.6s</strong>
+          <p>给出测试通过口径，但验收阈值本身不能反向证明方案能力已具备。</p>
+        </article>
+      </div>
+
+      <div class="decision-compare" aria-label="普通检索回答与 SolutionScope 审核结果对比">
+        <article class="decision-card decision-rag">
+          <div><span>普通检索式回答</span><small>ONE-PASS JUDGEMENT</small></div>
+          <h3>三份材料均提到识别与时延，<br/>可能概括为“基本具备验收条件”。</h3>
+          <p>相关内容被组织成了完整答案，但“验收标准”“规划能力”和“当前能力”可能相互补全。</p>
+          <b>产出：一次性的概率判断</b>
+        </article>
+        <div class="decision-arrow">→</div>
+        <article class="decision-card decision-scope">
+          <div><span>SolutionScope 审核状态</span><small>REVIEW &amp; GATE</small></div>
+          <h3><code>90% &lt; 92%</code> → 识别率阻断<br/>仅有时间戳 → 时延仍待证明</h3>
+          <p>系统分别核对当前能力、规划能力和验收口径；“能测量”不等于“已达标”。</p>
+          <b>产出：阻断原因、补充任务与人工确认项</b>
+        </article>
+      </div>
+
+      <div class="decision-roles" aria-label="模型、程序与人工的职责边界">
+        <article><i>${icon("search")}</i><div><span>MODEL</span><b>理解并结构化</b><p>提取对象、状态、指标和来源角色，不直接决定最终放行。</p></div></article>
+        <article><i>${icon("route")}</i><div><span>PROGRAM</span><b>执行确定性门禁</b><p>统一 0.6s 与 600ms，比较上下限，并按审核阶段应用规则。</p></div></article>
+        <article><i>${icon("shield")}</i><div><span>HUMAN</span><b>确认真实口径</b><p>确认 90% 是原型结果还是最终交付结果，处理材料无法裁决的问题。</p></div></article>
+      </div>
+
+      <div class="boundary-change-strip">
+        <div><span>VERSION CHANGE</span><b>当要求从 92% 提高到 95%</b></div>
+        <p>冻结旧结论 → 找出受影响的方案承诺与验收阈值 → 生成重新确认任务，而不是只重新回答一次。</p>
+      </div>
+
       <div class="boundary-capability-grid" aria-label="SolutionScope 扩展的四类能力">
         <article><span>01</span><b>要求原子化</b><p>拆出对象、动作、条件、指标和验收方式，形成能够逐项核对的审核单元。</p></article>
         <article><span>02</span><b>三方覆盖关系</b><p>建立需求、方案与验收的对应关系，识别“材料提到了，但方案没有满足”。</p></article>
@@ -174,13 +225,13 @@ function ragBoundaryStory() {
 
       <div class="boundary-proof-strip">
         <article class="boundary-audit-record">
-          <div class="boundary-record-head"><span>覆盖判断示例 · 需求—方案—验收逐项核对</span><b>BLOCKED</b></div>
+          <div class="boundary-record-head"><span>最终审核输出 · 感知方案是否具备验收条件</span><b>BLOCKED</b></div>
           <dl>
-            <div><dt>需求要求</dt><dd>目标识别需达到明确的最低指标</dd><small>存在硬约束</small></div>
-            <div><dt>方案承诺</dt><dd>仅说明支持目标识别，未承诺最低指标</dd><small>覆盖不足</small></div>
-            <div><dt>验收方法</dt><dd>测试计划已设置指标与通过口径</dd><small>方法可执行</small></div>
-            <div class="boundary-record-result"><dt>审核结论</dt><dd>相关材料均已找到，但方案覆盖仍不成立</dd><small>阻断放行</small></div>
-            <div><dt>下一动作</dt><dd>补充方案指标承诺及适用条件后重新核对</dd><small>进入复核</small></div>
+            <div><dt>识别率</dt><dd>当前 90%，低于 92% 的最低要求</dd><small>方案未覆盖</small></div>
+            <div><dt>感知时延</dt><dd>验收方法存在，但方案缺少 ≤600ms 的能力证据</dd><small>承诺缺失</small></div>
+            <div><dt>阶段判断</dt><dd>“后续优化至 92%”可作为规划，不可作为验收阶段的当前能力</dd><small>状态已区分</small></div>
+            <div class="boundary-record-result"><dt>审核结论</dt><dd>当前不能进入验收</dd><small>阻断放行</small></div>
+            <div><dt>补充任务</dt><dd>更新方案指标、补充时延测试结果，并确认 90% 的结果属性</dd><small>转人工复核</small></div>
           </dl>
         </article>
       </div>
@@ -588,3 +639,9 @@ function observeReveals() {
 }
 
 render();
+
+// Static capture mode for README screenshots. It removes only navigation chrome;
+// the normal product page remains unchanged when the query parameter is absent.
+if (new URLSearchParams(window.location.search).get("capture") === "readme") {
+  document.body.classList.add("readme-capture");
+}

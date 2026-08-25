@@ -131,6 +131,10 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .boundary-expansion-arrow { align-self: center; display: grid; justify-items: center; gap: 14px; color: var(--violet); }
 .boundary-expansion-arrow span { max-width: 82px; font-size: 13px; line-height: 1.25; text-align: center; font-weight: 900; }
 .boundary-expansion-arrow b { width: 58px; height: 58px; display: grid; place-items: center; color: var(--ink); border: var(--border); border-radius: 50%; background: var(--mint); box-shadow: 4px 4px 0 var(--ink); font-size: 28px; }
+.boundary-case-heading { margin-top: 58px; display: grid; grid-template-columns: minmax(0,1.12fr) minmax(340px,.88fr); align-items: end; gap: 42px; padding-top: 34px; border-top: 1.5px solid rgba(27,22,38,.2); }
+.boundary-case-heading .eyebrow { grid-column: 1/-1; }
+.boundary-case-heading h3 { margin: -18px 0 0; font-size: clamp(36px,4.35vw,64px); line-height: .98; letter-spacing: -.06em; }
+.boundary-case-heading p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.7; }
 .boundary-capability-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
 .boundary-capability-grid article { min-height: 230px; padding: 22px; display: flex; flex-direction: column; border: 1.7px solid var(--ink); border-radius: 20px; box-shadow: 4px 4px 0 var(--ink); background: var(--white); }
 .boundary-capability-grid article:nth-child(1) { color: #fff; background: #55515e; }
@@ -192,6 +196,10 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .decision-roles span { display: block; color: #7a7082; font: 700 9px/1.2 "Azeret Mono", monospace; letter-spacing: .09em; }
 .decision-roles b { display: block; margin-top: 5px; font-size: 18px; }
 .decision-roles p { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.52; }
+.boundary-change-strip { margin-top: 20px; padding: 22px 24px; display: grid; grid-template-columns: minmax(260px,.68fr) minmax(0,1.32fr); align-items: center; gap: 26px; border: 1.7px solid var(--ink); border-radius: 18px; background: var(--yellow); box-shadow: 4px 4px 0 var(--ink); }
+.boundary-change-strip div span { display: block; color: rgba(27,22,38,.58); font: 800 9px/1.2 "Azeret Mono", monospace; letter-spacing: .09em; }
+.boundary-change-strip div b { display: block; margin-top: 6px; font-size: 20px; }
+.boundary-change-strip p { margin: 0; font-size: 15px; line-height: 1.62; }
 .section-heading { margin-bottom: 46px; display: grid; grid-template-columns: 1.25fr .75fr; align-items: end; gap: 60px; }
 .section-heading h2, .story-main h2, .evaluation-copy h2 { margin: 12px 0 0; font-size: clamp(44px, 5vw, 72px); line-height: .98; letter-spacing: -.065em; }
 .section-heading p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
@@ -604,6 +612,8 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
   .boundary-expansion-arrow b { transform: rotate(90deg); }
   .boundary-capability-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .rag-source-triplet, .decision-roles { grid-template-columns: 1fr; }
+  .boundary-case-heading, .boundary-change-strip { grid-template-columns: 1fr; }
+  .boundary-case-heading h3 { margin-top: -10px; }
   .rag-source-card { min-height: 174px; }
   .workspace-grid { grid-template-columns: 190px minmax(0,1fr); }
   .review-panel { grid-column: 1/-1; border-top: 1px solid rgba(32,26,46,.1); border-left: 0; }
@@ -659,6 +669,14 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .footer p { font-size: 13px; }
 .footer > span { font-size: 9px; }
 .prototype-toast { font-size: 13px; }
+
+/* README capture mode: preserve the product UI while removing sticky browser-like chrome. */
+.readme-capture .topbar,
+.readme-capture .prototype-toast,
+.readme-capture #codex-browser-sidebar-comments-root { display: none !important; }
+.readme-capture .reveal { opacity: 1 !important; transform: none !important; }
+body.readme-capture { scrollbar-width: none; }
+body.readme-capture::-webkit-scrollbar { display: none; }
 
 @media (max-width: 760px) {
   .hero-content > p { font-size: 16px; }
