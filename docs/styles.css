@@ -135,7 +135,11 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .boundary-case-heading .eyebrow { grid-column: 1/-1; }
 .boundary-case-heading h3 { margin: -18px 0 0; font-size: clamp(36px,4.35vw,64px); line-height: .98; letter-spacing: -.06em; }
 .boundary-case-heading p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.7; }
-.boundary-capability-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
+.boundary-capability-heading { margin-top: 88px; padding-top: 42px; display: grid; grid-template-columns: minmax(0,1.18fr) minmax(320px,.82fr); align-items: end; gap: 42px; border-top: 1.5px solid rgba(27,22,38,.2); }
+.boundary-capability-heading .eyebrow { grid-column: 1/-1; margin-bottom: -20px; }
+.boundary-capability-heading h3 { max-width: 930px; margin: 0; font-size: clamp(36px,4.1vw,60px); line-height: 1; letter-spacing: -.06em; }
+.boundary-capability-heading p { max-width: 560px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.68; }
+.boundary-capability-grid { margin-top: 38px; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
 .boundary-capability-grid article { min-height: 230px; padding: 22px; display: flex; flex-direction: column; border: 1.7px solid var(--ink); border-radius: 20px; box-shadow: 4px 4px 0 var(--ink); background: var(--white); }
 .boundary-capability-grid article:nth-child(1) { color: #fff; background: #55515e; }
 .boundary-capability-grid article:nth-child(2) { background: var(--coral); }
@@ -173,7 +177,7 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .source-requirement { background: var(--yellow); }
 .source-solution { background: var(--coral); }
 .source-verification { background: var(--mint); }
-.decision-compare { margin-top: 28px; display: grid; grid-template-columns: minmax(0,1fr) 68px minmax(0,1fr); align-items: stretch; gap: 14px; }
+.decision-compare { margin-top: 52px; display: grid; grid-template-columns: minmax(0,1fr) 68px minmax(0,1fr); align-items: stretch; gap: 14px; }
 .decision-card { min-height: 290px; padding: 28px; display: flex; flex-direction: column; border: var(--border); border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); }
 .decision-card > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .decision-card > div span { font-size: 16px; font-weight: 900; }
@@ -187,7 +191,7 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .decision-scope > div small { color: #50369e; }
 .decision-scope code { padding: .03em .16em; border-radius: .16em; background: rgba(255,255,255,.5); font: 800 .9em/1 "Azeret Mono", monospace; }
 .decision-arrow { align-self: center; width: 58px; height: 58px; display: grid; place-items: center; border: var(--border); border-radius: 50%; background: var(--white); box-shadow: 4px 4px 0 var(--ink); font-size: 28px; font-weight: 900; }
-.decision-roles { margin-top: 28px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+.decision-roles { margin-top: 44px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
 .decision-roles article { min-height: 128px; padding: 18px; display: grid; grid-template-columns: 45px 1fr; align-items: start; gap: 13px; border: 1.5px solid var(--ink); border-radius: 18px; background: #fff; box-shadow: 3px 3px 0 var(--ink); }
 .decision-roles i { width: 45px; height: 45px; display: grid; place-items: center; border: 1.5px solid var(--ink); border-radius: 13px; background: var(--yellow); font-style: normal; }
 .decision-roles article:nth-child(2) i { background: var(--coral); }
@@ -196,7 +200,7 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
 .decision-roles span { display: block; color: #7a7082; font: 700 9px/1.2 "Azeret Mono", monospace; letter-spacing: .09em; }
 .decision-roles b { display: block; margin-top: 5px; font-size: 18px; }
 .decision-roles p { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.52; }
-.boundary-change-strip { margin-top: 20px; padding: 22px 24px; display: grid; grid-template-columns: minmax(260px,.68fr) minmax(0,1.32fr); align-items: center; gap: 26px; border: 1.7px solid var(--ink); border-radius: 18px; background: var(--yellow); box-shadow: 4px 4px 0 var(--ink); }
+.boundary-change-strip { margin-top: 38px; padding: 22px 24px; display: grid; grid-template-columns: minmax(260px,.68fr) minmax(0,1.32fr); align-items: center; gap: 26px; border: 1.7px solid var(--ink); border-radius: 18px; background: var(--yellow); box-shadow: 4px 4px 0 var(--ink); }
 .boundary-change-strip div span { display: block; color: rgba(27,22,38,.58); font: 800 9px/1.2 "Azeret Mono", monospace; letter-spacing: .09em; }
 .boundary-change-strip div b { display: block; margin-top: 6px; font-size: 20px; }
 .boundary-change-strip p { margin: 0; font-size: 15px; line-height: 1.62; }
@@ -612,8 +616,9 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
   .boundary-expansion-arrow b { transform: rotate(90deg); }
   .boundary-capability-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .rag-source-triplet, .decision-roles { grid-template-columns: 1fr; }
-  .boundary-case-heading, .boundary-change-strip { grid-template-columns: 1fr; }
+  .boundary-case-heading, .boundary-change-strip, .boundary-capability-heading { grid-template-columns: 1fr; }
   .boundary-case-heading h3 { margin-top: -10px; }
+  .boundary-capability-heading .eyebrow { margin-bottom: -8px; }
   .rag-source-card { min-height: 174px; }
   .workspace-grid { grid-template-columns: 190px minmax(0,1fr); }
   .review-panel { grid-column: 1/-1; border-top: 1px solid rgba(32,26,46,.1); border-left: 0; }
@@ -637,6 +642,9 @@ svg { width: 1.08em; height: 1.08em; fill: none; stroke: currentColor; stroke-wi
   .boundary-product-name { min-height: 46px; padding: 7px 12px 9px; font-size: 25px !important; }
   .boundary-flow-card h3 { margin-top: 37px; font-size: 31px; }
   .boundary-capability-grid, .boundary-proof-strip { grid-template-columns: 1fr; }
+  .boundary-capability-heading { margin-top: 66px; padding-top: 32px; gap: 18px; }
+  .boundary-capability-heading h3 { font-size: 39px; }
+  .boundary-capability-heading p { font-size: 15px; }
   .boundary-capability-grid article { min-height: 190px; }
   .boundary-proof-strip article { min-height: 185px; padding: 22px; }
   .boundary-audit-record dl > div { grid-template-columns: 78px minmax(0,1fr); }

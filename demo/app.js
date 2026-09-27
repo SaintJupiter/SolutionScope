@@ -216,6 +216,12 @@ function ragBoundaryStory() {
         <p>冻结旧结论 → 找出受影响的方案承诺与验收阈值 → 生成重新确认任务，而不是只重新回答一次。</p>
       </div>
 
+      <div class="boundary-capability-heading">
+        <span class="eyebrow">CAPABILITY SUMMARY</span>
+        <h3>把一次判断，沉淀为四类可复用的审核能力。</h3>
+        <p>上方展示一个具体案例如何被处理；下方总结支撑不同材料、不同阶段持续审查的产品能力。</p>
+      </div>
+
       <div class="boundary-capability-grid" aria-label="SolutionScope 扩展的四类能力">
         <article><span>01</span><b>要求原子化</b><p>拆出对象、动作、条件、指标和验收方式，形成能够逐项核对的审核单元。</p></article>
         <article><span>02</span><b>三方覆盖关系</b><p>建立需求、方案与验收的对应关系，识别“材料提到了，但方案没有满足”。</p></article>

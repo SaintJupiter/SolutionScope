@@ -480,50 +480,99 @@ function autoReviewFlow() {
   return `
     <section class="auto-review-flow reveal" id="auto-review-flow" aria-labelledby="auto-review-title" data-flow-stage="0">
       <header class="auto-flow-heading">
-        <div><span>AUTO REVIEW TRACE</span><h3 id="auto-review-title">一句原文，怎样变成可复核结论？</h3><p>演示系统如何拆解句子、区分当前与规划、绑定证据，再把确定性判断交给规则门禁。</p></div>
+        <div><span>CONTROL PLANE / AUDIT ARCHITECTURE</span><h3 id="auto-review-title">不是“把材料丢给模型”，<br/>而是建立一套可审计的审核系统。</h3><p>材料首先被编译成受 Schema 约束的审核对象；能力状态、证据锚点与三方覆盖分别登记，最后由确定性规则和人工门禁共同形成结论。</p></div>
         <button class="auto-flow-toggle" type="button" aria-pressed="false"><i></i><span>暂停演示</span></button>
       </header>
+      <div class="architecture-stack" aria-label="SolutionScope 系统架构">
+        <article class="architecture-layer layer-source"><span>01 / SOURCE PLANE</span><b>三类材料隔离登记</b><p>需求 · 方案 · 验收</p><small>SHA-256 / 版本 / 原文位置</small></article>
+        <i class="architecture-link"><b></b></i>
+        <article class="architecture-layer layer-model"><span>02 / MODEL PLANE</span><b>语义编译与证据规划</b><p>原子要求 · 能力账本</p><small>模型只生成受约束候选</small></article>
+        <i class="architecture-link"><b></b></i>
+        <article class="architecture-layer layer-rule"><span>03 / RULE PLANE</span><b>五类确定性校验</b><p>Schema · 锚点 · 状态 · 角色 · 数值</p><small>失败则阻断或转人工，不要求模型改写</small></article>
+        <i class="architecture-link"><b></b></i>
+        <article class="architecture-layer layer-human"><span>04 / DECISION PLANE</span><b>覆盖结论与人工放行</b><p>矩阵 · 风险 · 复核任务</p><small>保留冲突与审计轨迹</small></article>
+      </div>
       <div class="auto-flow-steps" role="tablist" aria-label="自动审核阶段">
-        <button class="active" type="button" role="tab" aria-selected="true" data-flow-step="0"><small>01</small><b>读取原文</b></button>
-        <button type="button" role="tab" aria-selected="false" data-flow-step="1"><small>02</small><b>拆解命题</b></button>
-        <button type="button" role="tab" aria-selected="false" data-flow-step="2"><small>03</small><b>绑定证据</b></button>
-        <button type="button" role="tab" aria-selected="false" data-flow-step="3"><small>04</small><b>执行门禁</b></button>
+        <button class="active" type="button" role="tab" aria-selected="true" data-flow-step="0"><small>01</small><b>来源登记</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="1"><small>02</small><b>Schema 编译</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="2"><small>03</small><b>状态账本</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="3"><small>04</small><b>证据绑定</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="4"><small>05</small><b>覆盖计算</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="5"><small>06</small><b>门禁决策</b></button>
       </div>
       <div class="auto-flow-progress" aria-hidden="true"><i></i></div>
       <div class="auto-flow-viewport">
         <div class="auto-flow-track">
           <article class="auto-flow-panel flow-panel-source" data-flow-panel="0">
-            <div class="flow-panel-meta"><span>RAW SOURCE / SYN-01</span><b>完整读取，不先摘要</b></div>
-            <blockquote>系统支持接入 <mark>摄像机、雷达、AIS</mark> 等多源数据，并通过 <mark>统一时间轴完成数据对齐</mark>；<em>后续将进一步完善跨设备时钟同步与误差校正</em>。</blockquote>
-            <p>先保留完整语境与来源位置，避免抽取后失去“当前”和“后续”的关系。</p>
+            <div class="flow-panel-meta"><span>SOURCE REGISTRY / IMMUTABLE INPUT</span><b>先分角色，再进入模型</b></div>
+            <div class="source-registry">
+              <div class="source-document source-requirement"><span>REQ</span><b>需求说明书</b><small>DOC-RQ-8A21 · v3.2</small><em>角色：规范性要求</em></div>
+              <div class="source-document source-solution"><span>SOL</span><b>技术方案</b><small>DOC-SL-14F0 · v2.6</small><em>角色：能力承诺</em></div>
+              <div class="source-document source-verification"><span>VER</span><b>验收材料</b><small>DOC-VR-91C4 · v1.8</small><em>角色：测试与判据</em></div>
+              <div class="source-fingerprint"><span>SOURCE CONTRACT</span><code>source_sha256: 7fd2…91aa</code><code>config_sha256: b614…32e8</code><b>RAW OUTPUT · READ ONLY</b></div>
+            </div>
+            <p>三类证据不可互相替代；原始输入与模型原始输出注册后保持不可变，所有后续判断都能回到同一版本。</p>
           </article>
           <article class="auto-flow-panel flow-panel-atoms" data-flow-panel="1">
-            <div class="flow-panel-meta"><span>CLAUSE COMPILER</span><b>关键片段逐个落位</b></div>
-            <div class="flow-token-cloud">
-              <span class="token-object"><small>对象</small>摄像机 / 雷达 / AIS</span>
-              <span class="token-action"><small>动作</small>支持接入</span>
-              <span class="token-current"><small>当前状态</small>完成数据对齐</span>
-              <span class="token-signal"><small>规划信号</small>后续 / 将</span>
-              <span class="token-planned"><small>规划能力</small>完善同步与误差校正</span>
+            <div class="flow-panel-meta"><span>REQUIREMENT COMPILER / JSON SCHEMA</span><b>自然语言 → 可检查对象</b></div>
+            <div class="schema-compiler">
+              <blockquote>“系统应接入摄像机、雷达与 AIS，识别率不低于 92%，并保留跨设备时间同步记录。”</blockquote>
+              <div class="schema-object">
+                <header><span>RequirementAtom</span><b>SCHEMA VALID</b></header>
+                <code><i>requirement_id</i><strong>R-014</strong></code>
+                <code><i>object</i><strong>多源感知链路</strong></code>
+                <code><i>required_action</i><strong>接入并完成目标识别</strong></code>
+                <code><i>conditions[]</i><strong>摄像机 · 雷达 · AIS</strong></code>
+                <code><i>criterion</i><strong>识别率 ≥ 92%</strong></code>
+                <code><i>expected_verification</i><strong>数据集 + 阈值 + 判定方法</strong></code>
+              </div>
             </div>
-            <p>模型负责识别语义角色；每个原子片段仍保留回到原句的证据锚点。</p>
+            <p>复合句被拆成对象、动作、条件、指标和验收期待；字段缺失、枚举越界、重复 ID 会在结构门禁直接失败。</p>
           </article>
-          <article class="auto-flow-panel flow-panel-evidence" data-flow-panel="2">
-            <div class="flow-panel-meta"><span>EVIDENCE BINDING</span><b>同一能力，状态分流</b></div>
-            <div class="flow-evidence-lanes">
-              <div><span>CURRENT</span><i></i><strong>统一时间轴完成数据对齐</strong><small>SYN-01 · clause-1 · 已绑定</small></div>
-              <div><span>PLANNED</span><i></i><strong>完善跨设备同步与误差校正</strong><small>SYN-01 · clause-2 · 已绑定</small></div>
+          <article class="auto-flow-panel flow-panel-ledger" data-flow-panel="2">
+            <div class="flow-panel-meta"><span>CAPABILITY LEDGER / STATE MACHINE</span><b>能力与状态只登记一次</b></div>
+            <div class="ledger-layout">
+              <div class="ledger-entry"><header><span>CAP-017</span><b>多源数据接入</b></header><p>摄像机 / 雷达 / AIS 接入</p><footer><em class="state-current">CURRENT</em><small>3 anchors · 0 gaps</small></footer></div>
+              <div class="ledger-entry"><header><span>CAP-021</span><b>跨设备时钟校正</b></header><p>误差校正与统一时间基准</p><footer><em class="state-planned">PLANNED</em><small>1 anchor · 2 gaps</small></footer></div>
+              <div class="state-machine" aria-label="能力生命周期状态系统"><span class="active">CURRENT</span><i>·</i><span>PLANNED</span><i>·</i><span>CANDIDATE</span><i>·</i><span>UNKNOWN</span><strong>受控枚举 · 禁止下游自动提升状态</strong></div>
             </div>
-            <p>相关片段可以属于同一能力对象，但不能因为语义接近就被合并成同一完成状态。</p>
+            <p>下游片段只能引用账本中的 capability_id，不能自行创造状态；装配器再把账本状态确定性注入最终报告。</p>
           </article>
-          <article class="auto-flow-panel flow-panel-gate" data-flow-panel="3">
-            <div class="flow-panel-meta"><span>DETERMINISTIC GATE</span><b>形成可复核结论</b></div>
-            <div class="flow-gate-result"><span>状态提升检查</span><strong>BLOCKED</strong><p>不能直接写成“已完成全链路时空同步”</p></div>
-            <div class="flow-next-action"><b>下一动作</b><span>保留当前能力</span><i>→</i><span>标记规划项</span><i>→</i><span>转人工确认验收口径</span></div>
+          <article class="auto-flow-panel flow-panel-evidence" data-flow-panel="3">
+            <div class="flow-panel-meta"><span>EVIDENCE GRAPH / EXACT LOCATORS</span><b>结论、状态与原文逐边绑定</b></div>
+            <div class="evidence-graph">
+              <div class="graph-node graph-requirement"><span>REQ-E12</span><b>识别率 ≥ 92%</b><small>p.12 · §4.2 · P012-003</small></div>
+              <div class="graph-edge edge-one"><i></i><small>requires</small></div>
+              <div class="graph-core"><span>R-014</span><b>目标识别能力</b><small>atomic obligation</small></div>
+              <div class="graph-edge edge-two"><i></i><small>responded_by</small></div>
+              <div class="graph-node graph-solution"><span>SOL-E09</span><b>当前识别率 90%</b><small>p.09 · §3.1 · P009-004</small></div>
+              <div class="graph-edge edge-three"><i></i><small>verified_by</small></div>
+              <div class="graph-node graph-verification"><span>VER-E05</span><b>以 92% 为通过阈值</b><small>p.05 · §2.3 · P005-002</small></div>
+            </div>
+            <p>每个锚点同时校验页码、章节、段落 ID 与原文短引；跨角色引用、越界证据和错误定位都会被拒绝。</p>
+          </article>
+          <article class="auto-flow-panel flow-panel-coverage" data-flow-panel="4">
+            <div class="flow-panel-meta"><span>COVERAGE ENGINE / COMPONENT LEVEL</span><b>分别核对“做什么”和“怎么验”</b></div>
+            <div class="coverage-engine">
+              <header><b>R-014 / 多源目标识别</b><span>SOLUTION</span><span>VERIFICATION</span></header>
+              <div><strong>动作</strong><p>接入并识别目标</p><em class="coverage-pass">COVERED</em><em class="coverage-pass">METHOD READY</em></div>
+              <div><strong>条件</strong><p>摄像机 · 雷达 · AIS</p><em class="coverage-warn">PARTIAL</em><em class="coverage-pass">DATASET READY</em></div>
+              <div><strong>指标</strong><p>识别率 ≥ 92%</p><em class="coverage-block">90% / FAIL</em><em class="coverage-pass">92% / READY</em></div>
+              <footer><span>方案覆盖：PARTIAL</span><span>验收准备：EXECUTABLE</span><b>两侧独立计算</b></footer>
+            </div>
+            <p>即使验收材料写了 92%，也不能替代方案当前只有 90% 的事实；覆盖不是相似度，而是逐组件、有角色的判断。</p>
+          </article>
+          <article class="auto-flow-panel flow-panel-gate" data-flow-panel="5">
+            <div class="flow-panel-meta"><span>DETERMINISTIC GATES / HUMAN IN THE LOOP</span><b>结构通过 ≠ 审核放行</b></div>
+            <div class="gate-console">
+              <div class="gate-list"><span><i>✓</i> Schema 合同</span><span><i>✓</i> 锚点精确匹配</span><span><i>✓</i> 证据角色一致</span><span><i>!</i> 生命周期未提升</span><span class="failed"><i>×</i> 数值不变量 90 &lt; 92</span></div>
+              <div class="gate-output"><span>review_gate</span><strong>BLOCKED_PENDING_<br/>HUMAN_REVIEW</strong><code>semantic_risk_count: 2</code><code>release_held: true</code><p>生成：覆盖矩阵 · 风险清单 · 复核任务 · 审计报告</p></div>
+            </div>
+            <div class="flow-next-action"><b>人工复核队列</b><span>确认当前能力</span><i>→</i><span>补齐方案证据</span><i>→</i><span>重跑受影响项</span></div>
           </article>
         </div>
       </div>
-      <footer class="auto-flow-status"><span>正在演示</span><b>01 / 读取原文</b><small>约 3 秒后进入下一步</small></footer>
+      <footer class="auto-flow-status"><span>正在演示</span><b>01 / 来源登记</b><small>约 4 秒后进入下一层</small></footer>
     </section>`;
 }
 
@@ -667,7 +716,7 @@ function bindAutoReviewFlow() {
   const progress = root.querySelector(".auto-flow-progress i");
   const toggle = root.querySelector(".auto-flow-toggle");
   const status = root.querySelector(".auto-flow-status");
-  const labels = ["读取原文", "拆解命题", "绑定证据", "执行门禁"];
+  const labels = ["来源登记", "Schema 编译", "状态账本", "证据绑定", "覆盖计算", "门禁决策"];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let current = 0;
   let playing = !reducedMotion;
@@ -675,7 +724,7 @@ function bindAutoReviewFlow() {
   const paint = (index) => {
     current = index;
     root.dataset.flowStage = String(index);
-    track.style.transform = `translateX(-${index * 25}%)`;
+    track.style.transform = `translateX(-${index * (100 / steps.length)}%)`;
     progress.style.width = `${((index + 1) / steps.length) * 100}%`;
     steps.forEach((step, stepIndex) => {
       const active = stepIndex === index;
@@ -683,7 +732,7 @@ function bindAutoReviewFlow() {
       step.setAttribute("aria-selected", String(active));
     });
     status.querySelector("b").textContent = `${String(index + 1).padStart(2, "0")} / ${labels[index]}`;
-    status.querySelector("small").textContent = playing ? "约 3 秒后进入下一步" : "已暂停，可点击阶段查看";
+    status.querySelector("small").textContent = playing ? "约 4 秒后进入下一层" : "已暂停，可点击阶段查看";
   };
 
   const stop = () => {
@@ -702,7 +751,7 @@ function bindAutoReviewFlow() {
     toggle.querySelector("span").textContent = "暂停演示";
     status.querySelector("span").textContent = "正在演示";
     paint(current);
-    autoReviewTimer = setInterval(() => paint((current + 1) % steps.length), 3200);
+    autoReviewTimer = setInterval(() => paint((current + 1) % steps.length), 4200);
   };
 
   steps.forEach((step, index) => step.addEventListener("click", () => {
