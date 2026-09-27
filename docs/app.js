@@ -214,6 +214,12 @@ function ragBoundaryStory() {
         <p>冻结旧结论 → 找出受影响的方案承诺与验收阈值 → 生成重新确认任务，而不是只重新回答一次。</p>
       </div>
 
+      <div class="boundary-capability-heading">
+        <span class="eyebrow">CAPABILITY SUMMARY</span>
+        <h3>把一次判断，沉淀为四类可复用的审核能力。</h3>
+        <p>上方展示一个具体案例如何被处理；下方总结支撑不同材料、不同阶段持续审查的产品能力。</p>
+      </div>
+
       <div class="boundary-capability-grid" aria-label="SolutionScope 扩展的四类能力">
         <article><span>01</span><b>要求原子化</b><p>拆出对象、动作、条件、指标和验收方式，形成能够逐项核对的审核单元。</p></article>
         <article><span>02</span><b>三方覆盖关系</b><p>建立需求、方案与验收的对应关系，识别“材料提到了，但方案没有满足”。</p></article>
@@ -470,10 +476,62 @@ function coverageMatrixPane() {
     </section>`;
 }
 
+function autoReviewFlow() {
+  return `
+    <section class="auto-review-flow reveal" id="auto-review-flow" aria-labelledby="auto-review-title" data-flow-stage="0">
+      <header class="auto-flow-heading">
+        <div><span>AUTO REVIEW TRACE</span><h3 id="auto-review-title">一句原文，怎样变成可复核结论？</h3><p>演示系统如何拆解句子、区分当前与规划、绑定证据，再把确定性判断交给规则门禁。</p></div>
+        <button class="auto-flow-toggle" type="button" aria-pressed="false"><i></i><span>暂停演示</span></button>
+      </header>
+      <div class="auto-flow-steps" role="tablist" aria-label="自动审核阶段">
+        <button class="active" type="button" role="tab" aria-selected="true" data-flow-step="0"><small>01</small><b>读取原文</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="1"><small>02</small><b>拆解命题</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="2"><small>03</small><b>绑定证据</b></button>
+        <button type="button" role="tab" aria-selected="false" data-flow-step="3"><small>04</small><b>执行门禁</b></button>
+      </div>
+      <div class="auto-flow-progress" aria-hidden="true"><i></i></div>
+      <div class="auto-flow-viewport">
+        <div class="auto-flow-track">
+          <article class="auto-flow-panel flow-panel-source" data-flow-panel="0">
+            <div class="flow-panel-meta"><span>RAW SOURCE / SYN-01</span><b>完整读取，不先摘要</b></div>
+            <blockquote>系统支持接入 <mark>摄像机、雷达、AIS</mark> 等多源数据，并通过 <mark>统一时间轴完成数据对齐</mark>；<em>后续将进一步完善跨设备时钟同步与误差校正</em>。</blockquote>
+            <p>先保留完整语境与来源位置，避免抽取后失去“当前”和“后续”的关系。</p>
+          </article>
+          <article class="auto-flow-panel flow-panel-atoms" data-flow-panel="1">
+            <div class="flow-panel-meta"><span>CLAUSE COMPILER</span><b>关键片段逐个落位</b></div>
+            <div class="flow-token-cloud">
+              <span class="token-object"><small>对象</small>摄像机 / 雷达 / AIS</span>
+              <span class="token-action"><small>动作</small>支持接入</span>
+              <span class="token-current"><small>当前状态</small>完成数据对齐</span>
+              <span class="token-signal"><small>规划信号</small>后续 / 将</span>
+              <span class="token-planned"><small>规划能力</small>完善同步与误差校正</span>
+            </div>
+            <p>模型负责识别语义角色；每个原子片段仍保留回到原句的证据锚点。</p>
+          </article>
+          <article class="auto-flow-panel flow-panel-evidence" data-flow-panel="2">
+            <div class="flow-panel-meta"><span>EVIDENCE BINDING</span><b>同一能力，状态分流</b></div>
+            <div class="flow-evidence-lanes">
+              <div><span>CURRENT</span><i></i><strong>统一时间轴完成数据对齐</strong><small>SYN-01 · clause-1 · 已绑定</small></div>
+              <div><span>PLANNED</span><i></i><strong>完善跨设备同步与误差校正</strong><small>SYN-01 · clause-2 · 已绑定</small></div>
+            </div>
+            <p>相关片段可以属于同一能力对象，但不能因为语义接近就被合并成同一完成状态。</p>
+          </article>
+          <article class="auto-flow-panel flow-panel-gate" data-flow-panel="3">
+            <div class="flow-panel-meta"><span>DETERMINISTIC GATE</span><b>形成可复核结论</b></div>
+            <div class="flow-gate-result"><span>状态提升检查</span><strong>BLOCKED</strong><p>不能直接写成“已完成全链路时空同步”</p></div>
+            <div class="flow-next-action"><b>下一动作</b><span>保留当前能力</span><i>→</i><span>标记规划项</span><i>→</i><span>转人工确认验收口径</span></div>
+          </article>
+        </div>
+      </div>
+      <footer class="auto-flow-status"><span>正在演示</span><b>01 / 读取原文</b><small>约 3 秒后进入下一步</small></footer>
+    </section>`;
+}
+
 function productDemo() {
   return `
     <section class="product-section" id="product">
       <div class="section-heading reveal"><div><span class="eyebrow">LIVE PRODUCT PREVIEW</span><h2>从原文核对到放行判断，<br/>完整走一遍审核流程。</h2></div><p>使用脱敏合成内容演示证据定位、覆盖判断、人工复核与报告输出。</p></div>
+      ${autoReviewFlow()}
       <div class="demo-stack">
         <section class="demo-block demo-block-review reveal" id="review-workbench">
           <div class="demo-block-heading"><span class="demo-block-index">01</span><div><small>CORE INTERACTION</small><h3>审核工作台</h3><p>对照原文逐项核对要求、证据、缺口与验收口径，并保留人工决定。</p></div><b>可交互</b></div>
@@ -565,6 +623,7 @@ function render() {
 }
 
 let toastTimer;
+let autoReviewTimer;
 function toast(message) {
   const element = document.getElementById("prototype-toast");
   element.textContent = message;
@@ -574,6 +633,7 @@ function toast(message) {
 }
 
 function bindInteractions() {
+  bindAutoReviewFlow();
   document.querySelectorAll(".js-scroll-workbench").forEach((button) => button.addEventListener("click", () => document.getElementById("review-workbench").scrollIntoView({ behavior: "auto", block: "start" })));
   document.querySelectorAll(".js-open-pane").forEach((button) => button.addEventListener("click", () => {
     document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -596,6 +656,62 @@ function bindInteractions() {
     importedChangeImpact = null;
     renderAndReturnToMatrix("已恢复脱敏合成示例");
   });
+}
+
+function bindAutoReviewFlow() {
+  clearInterval(autoReviewTimer);
+  const root = document.querySelector(".auto-review-flow");
+  if (!root) return;
+  const steps = [...root.querySelectorAll("[data-flow-step]")];
+  const track = root.querySelector(".auto-flow-track");
+  const progress = root.querySelector(".auto-flow-progress i");
+  const toggle = root.querySelector(".auto-flow-toggle");
+  const status = root.querySelector(".auto-flow-status");
+  const labels = ["读取原文", "拆解命题", "绑定证据", "执行门禁"];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let current = 0;
+  let playing = !reducedMotion;
+
+  const paint = (index) => {
+    current = index;
+    root.dataset.flowStage = String(index);
+    track.style.transform = `translateX(-${index * 25}%)`;
+    progress.style.width = `${((index + 1) / steps.length) * 100}%`;
+    steps.forEach((step, stepIndex) => {
+      const active = stepIndex === index;
+      step.classList.toggle("active", active);
+      step.setAttribute("aria-selected", String(active));
+    });
+    status.querySelector("b").textContent = `${String(index + 1).padStart(2, "0")} / ${labels[index]}`;
+    status.querySelector("small").textContent = playing ? "约 3 秒后进入下一步" : "已暂停，可点击阶段查看";
+  };
+
+  const stop = () => {
+    playing = false;
+    clearInterval(autoReviewTimer);
+    toggle.setAttribute("aria-pressed", "true");
+    toggle.querySelector("span").textContent = "继续演示";
+    status.querySelector("span").textContent = "演示已暂停";
+    paint(current);
+  };
+
+  const start = () => {
+    playing = true;
+    clearInterval(autoReviewTimer);
+    toggle.setAttribute("aria-pressed", "false");
+    toggle.querySelector("span").textContent = "暂停演示";
+    status.querySelector("span").textContent = "正在演示";
+    paint(current);
+    autoReviewTimer = setInterval(() => paint((current + 1) % steps.length), 3200);
+  };
+
+  steps.forEach((step, index) => step.addEventListener("click", () => {
+    paint(index);
+    if (playing) start();
+  }));
+  toggle.addEventListener("click", () => playing ? stop() : start());
+  paint(0);
+  if (playing) start(); else stop();
 }
 
 function renderAndReturnToMatrix(message) {
