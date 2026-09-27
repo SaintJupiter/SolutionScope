@@ -110,34 +110,32 @@ function nav() {
         <span class="logo-mark">S</span><span>Solution<em>Scope</em></span>
       </a>
       <nav class="nav-links" aria-label="主导航">
-        <a href="#rag-boundary">能力扩展</a><a href="#product">产品体验</a><a href="#evaluation">评测结果</a>
+        <a href="#rag-boundary">案例拆解</a><a href="#product">产品体验</a><a href="#evaluation">评测结果</a>
       </nav>
       <div class="nav-actions">
-        <span class="prototype-badge">VISUAL PROTOTYPE</span>
-        <button class="button button-dark js-scroll-workbench">打开工作台 ${icon("arrow")}</button>
+        <span class="prototype-badge">合成数据演示</span>
+        <a class="button button-dark js-scroll-workbench" href="#review-workbench">打开工作台 ${icon("arrow")}</a>
       </div>
     </header>`;
 }
 
 function hero() {
-  return `
-    <section class="hero" id="top">
-      <div class="hero-blob blob-coral"></div><div class="hero-blob blob-violet"></div><div class="hero-blob blob-mint"></div>
-      <div class="sticker sticker-left">证据先行</div>
-      <div class="sticker sticker-right">边界清楚 ✦</div>
-      <div class="hero-content reveal">
-        <span class="eyebrow">AI PRODUCT LAB · CONTROLLED WORKFLOW</span>
-        <h1>复杂材料，<span class="purple-block">拆开看。</span><br/>关键判断，<span class="mint-block">有据可查。</span></h1>
-        <p>把需求、方案与测试材料放到同一条证据链上：不只回答“材料说了什么”，还判断方案是否真正满足要求、验收是否能够执行。</p>
-        <div class="hero-actions">
-          <button class="button button-dark js-scroll-workbench">进入产品演示 ${icon("arrow")}</button>
-          <a class="text-link" href="#workflow">先看它如何工作 <span>↓</span></a>
-        </div>
-      </div>
-      <div class="hero-ribbon" aria-label="产品能力">
-        <span>REQUIREMENT EXTRACTION</span><i>✦</i><span>EVIDENCE TRACEABILITY</span><i>✦</i><span>GAP DISCOVERY</span><i>✦</i><span>HUMAN REVIEW</span>
-      </div>
-    </section>`;
+ return `
+ <section class="hero scope-intro" id="top">
+  <div class="scope-intro-copy"><span class="eyebrow">课题项目 AI 审核助手 / 方案审查与验收核对</span>
+   <h1>方案说“支持”，<br/><em>就能通过验收吗？</em></h1>
+   <p>面向方案人员、项目负责人和测试评审人员：把需求、方案与验收材料逐项对照，找出未兑现的承诺、缺失的证据和需要人工确认的口径。</p>
+   <div class="hero-actions"><a class="button button-dark js-scroll-workbench" href="#review-workbench">亲手审核一条要求 ${icon("arrow")}</a><a class="text-link" href="#coverage-matrix">查看三方覆盖矩阵 ↓</a></div>
+   <p class="scope-demo-note">公开页使用脱敏合成材料，演示审核与复核流程。页面不会现场调用模型；可导入本地 Skill 生成的审核包，文件仅在浏览器内解析。</p>
+  </div>
+  <aside class="scope-mini-case" aria-label="审核问题示例"><div class="scope-case-label"><span>先看一个具体问题</span><b>合成示例</b></div><h2>同样写了“92%”，<br/>证明的是不同的事。</h2><dl><div><dt>需求</dt><dd>识别率至少 <strong>92%</strong></dd></div><div><dt>方案</dt><dd>目前 <strong>90%</strong>，后续提升至 92%</dd></div><div><dt>验收</dt><dd>以 <strong>92%</strong> 为通过标准</dd></div></dl><div class="scope-case-result"><b>当前不具备验收条件</b><p>未来计划不等于当前能力；验收标准也不能替方案证明达标。</p></div><a href="#rag-boundary">展开证据与判断过程 →</a></aside>
+ </section>
+ <section class="scope-journey" aria-label="产品体验导览">
+  <a href="#review-workbench"><span>01 / 看原文</span><h3>一项要求，依据在哪里？</h3><p>对照摘录、条件与指标，检查 AI 审核草稿。</p><b>进入审核 →</b></a>
+  <a href="#coverage-matrix"><span>02 / 查缺口</span><h3>方案与验收，哪边没对齐？</h3><p>查看覆盖矩阵、数值门禁及变更后的复核任务。</p><b>查看矩阵 →</b></a>
+  <a href="#evaluation-report"><span>03 / 做决定</span><h3>哪些能接受，哪些需补证？</h3><p>保留人工决定，导出当前审核结果与待处理项。</p><b>查看审核报告 →</b></a>
+ </section>
+ <section class="scope-role-strip" aria-label="AI、程序与人工分工"><div><span>AI + SKILL</span><b>拆要求、找证据</b><p>提取动作、条件与指标，并绑定来源。</p></div><div><span>程序规则</span><b>核对数值与状态</b><p>比较阈值、区分当前与规划，保留冲突。</p></div><div><span>人工复核</span><b>确认口径与结论</b><p>处理缺口和歧义，不由模型替人放行。</p></div></section>`;
 }
 
 function ragBoundaryStory() {
@@ -475,7 +473,6 @@ function coverageMatrixPane() {
 function productDemo() {
   return `
     <section class="product-section" id="product">
-      ${scenarioIntro()}
       <div class="section-heading reveal"><div><span class="eyebrow">LIVE PRODUCT PREVIEW</span><h2>从原文核对到放行判断，<br/>完整走一遍审核流程。</h2></div><p>使用脱敏合成内容演示证据定位、覆盖判断、人工复核与报告输出。</p></div>
       <div class="demo-stack">
         <section class="demo-block demo-block-review reveal" id="review-workbench">
@@ -562,7 +559,7 @@ function footer() {
 }
 
 function render() {
-  document.getElementById("app").innerHTML = `${nav()}${hero()}${ragBoundaryStory()}${evaluationStory()}${productDemo()}${workflowStory()}${footer()}`;
+  document.getElementById("app").innerHTML = `${nav()}${hero()}${productDemo()}${ragBoundaryStory()}${evaluationStory()}${workflowStory()}${footer()}`;
   bindInteractions();
   observeReveals();
 }
@@ -577,7 +574,7 @@ function toast(message) {
 }
 
 function bindInteractions() {
-  document.querySelectorAll(".js-scroll-workbench").forEach((button) => button.addEventListener("click", () => document.getElementById("product").scrollIntoView({ behavior: "smooth" })));
+  document.querySelectorAll(".js-scroll-workbench").forEach((button) => button.addEventListener("click", () => document.getElementById("review-workbench").scrollIntoView({ behavior: "auto", block: "start" })));
   document.querySelectorAll(".js-open-pane").forEach((button) => button.addEventListener("click", () => {
     document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({ behavior: "smooth", block: "start" });
   }));
